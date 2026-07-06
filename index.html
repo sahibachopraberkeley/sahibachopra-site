@@ -34,8 +34,8 @@
       </figure>
 
       <nav class="masthead__nav" aria-label="Sections">
-        <a href="#research"><span class="num">01</span> Research</a>
-        <a href="#about"><span class="num">02</span> About</a>
+        <a href="#about"><span class="num">01</span> About</a>
+        <a href="#research"><span class="num">02</span> Research</a>
         <a href="#sitar"><span class="num">03</span> Sitar</a>
       </nav>
 
@@ -50,79 +50,9 @@
     <!-- CONTENT -->
     <main class="content">
 
-      <!-- RESEARCH (the focus) -->
-      <section class="block" id="research">
-        <div class="block__head">
-          <span class="label">Selected Research</span>
-        </div>
-
-        <ol class="index">
-          <li class="work work--lead reveal">
-            <span class="work__no">01</span>
-            <div class="work__body">
-              <span class="work__flag">Job Market Paper</span>
-              <h2 class="work__title">Effort Opacity: Generative AI and Reciprocal Effort in Collaborative Work</h2>
-              <p class="work__note">Generative AI can obscure how much human effort produced a piece of work. In collaboration, AI-assisted contributions read as lower-effort and draw less reciprocal effort. Tested in open-source software through one observational study and two pre-registered experiments.</p>
-            </div>
-          </li>
-
-          <li class="work reveal">
-            <span class="work__no">02</span>
-            <div class="work__body">
-              <h2 class="work__title">Which Ideas Attract Workers? Gender and Labor Supply in Startups</h2>
-              <p class="work__meta">with Solène Delecourt, Katelyn Cranney, Rembrand Koning</p>
-              <p class="work__status">Revise &amp; Resubmit, <em>Management Science</em> · <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6336581" target="_blank" rel="noopener">Working paper</a></p>
-              <p class="work__note">Across 52,000+ startups and a field experiment, how a startup's focus on women shifts male labor supply, implying a sizable compensation offset. Nominated for the Best Conference Paper and Research Methods Paper prizes, SMS 2023.</p>
-            </div>
-          </li>
-
-          <li class="work reveal">
-            <span class="work__no">03</span>
-            <div class="work__body">
-              <h2 class="work__title">The Fabricated Front: Generative AI and the Opacity of Workplace Performance</h2>
-              <p class="work__meta">with Tom Van Nuenen, Pratik Sachdeva</p>
-              <p class="work__status">Under review, <em>The Paris Journal on AI &amp; Digital Ethics</em></p>
-              <p class="work__note">From 1,250 interview transcripts, five mechanisms of opacity in workplace AI use, and why governance should manage involvement rather than mandate universal disclosure.</p>
-            </div>
-          </li>
-
-          <li class="work reveal">
-            <span class="work__no">04</span>
-            <div class="work__body">
-              <h2 class="work__title">Whose Transparency Is It Anyway?</h2>
-              <p class="work__meta">with Genevieve Smith, Natalia Luka, Min Kyung Lee</p>
-              <p class="work__status">Working paper</p>
-              <p class="work__note">A mixed-methods study, surveying 400 stakeholders alongside participatory design sessions, on how different groups understand what AI transparency should mean.</p>
-            </div>
-          </li>
-
-          <li class="work reveal">
-            <span class="work__no">05</span>
-            <div class="work__body">
-              <h2 class="work__title">The Technical Debt Tradeoff: Generative AI, Shipping Speed, and the Future Cost of Work</h2>
-              <p class="work__meta">with Dhruv Agarwal</p>
-              <p class="work__status">Work in progress</p>
-              <p class="work__note">Using de-identified workplace data, whether generative AI changes how technical debt accumulates and what that means for long-run organizational capacity.</p>
-            </div>
-          </li>
-
-          <li class="work reveal">
-            <span class="work__no">06</span>
-            <div class="work__body">
-              <h2 class="work__title">From AI Tools to AI Systems: How Organizations Redesign Work Around Generative AI</h2>
-              <p class="work__meta">with Calista Cooper, Kim Coutts</p>
-              <p class="work__status">Work in progress</p>
-              <p class="work__note">How organizations move from individual AI experimentation to structured, governed workflows, and how that reshapes documentation, roles, and knowledge.</p>
-            </div>
-          </li>
-        </ol>
-      </section>
-
-      <!-- ABOUT (concise) -->
+      <!-- ABOUT -->
       <section class="block" id="about">
-        <div class="block__head">
-          <span class="label">About</span>
-        </div>
+        <div class="block__head"><span class="label">About</span></div>
         <div class="prose reveal">
           <p class="prose__lead">
             I study how new technologies change work and organizations, especially
@@ -144,14 +74,101 @@
         </ol>
       </section>
 
+      <!-- RESEARCH -->
+      <section class="block" id="research">
+        <div class="block__head"><span class="label">Research</span> <span class="label label--hint">Click to expand</span></div>
+
+        <ol class="index">
+          <li class="work work--lead reveal">
+            <span class="work__no">01</span>
+            <details class="work__d" open>
+              <summary class="work__sum">
+                <span class="work__flag">Job Market Paper</span>
+                <span class="work__title">Effort Opacity: Generative AI and Reciprocal Effort in Collaborative Work</span>
+              </summary>
+              <div class="work__reveal">
+                <p class="work__note">How generative AI obscures the inference of human effort in collaborative work, tested in open-source software.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="work reveal">
+            <span class="work__no">02</span>
+            <details class="work__d">
+              <summary class="work__sum">
+                <span class="work__title">Which Ideas Attract Workers? Gender and Labor Supply in Startups</span>
+                <span class="work__meta">with Solène Delecourt, Katelyn Cranney, Rembrand Koning</span>
+                <span class="work__marks"><span class="badge badge--rr">Revise &amp; Resubmit · Management Science</span></span>
+              </summary>
+              <div class="work__reveal">
+                <p class="work__note">How a startup's focus on women shifts male labor supply, across 52,000+ startups and a field experiment.</p>
+                <p class="work__links"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6336581" target="_blank" rel="noopener">Working paper →</a></p>
+              </div>
+            </details>
+          </li>
+
+          <li class="work reveal">
+            <span class="work__no">03</span>
+            <details class="work__d">
+              <summary class="work__sum">
+                <span class="work__title">The Fabricated Front: Generative AI and the Opacity of Workplace Performance</span>
+                <span class="work__meta">with Tom Van Nuenen, Pratik Sachdeva</span>
+                <span class="work__marks"><span class="badge">Under review</span> <span class="work__venue">The Paris Journal on AI &amp; Digital Ethics</span></span>
+              </summary>
+              <div class="work__reveal">
+                <p class="work__note">Five mechanisms of opacity in workplace AI use, from 1,250 interview transcripts.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="work reveal">
+            <span class="work__no">04</span>
+            <details class="work__d">
+              <summary class="work__sum">
+                <span class="work__title">Whose Transparency Is It Anyway?</span>
+                <span class="work__meta">with Genevieve Smith, Natalia Luka, Min Kyung Lee</span>
+                <span class="work__marks"><span class="badge">Working paper</span></span>
+              </summary>
+              <div class="work__reveal">
+                <p class="work__note">How different stakeholders understand what AI transparency should mean, via survey and participatory design.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="work reveal">
+            <span class="work__no">05</span>
+            <details class="work__d">
+              <summary class="work__sum">
+                <span class="work__title">The Technical Debt Tradeoff: Generative AI, Shipping Speed, and the Future Cost of Work</span>
+                <span class="work__meta">with Dhruv Agarwal</span>
+                <span class="work__marks"><span class="badge">Work in progress</span></span>
+              </summary>
+              <div class="work__reveal">
+                <p class="work__note">Whether generative AI changes how technical debt accumulates, using de-identified workplace data.</p>
+              </div>
+            </details>
+          </li>
+
+          <li class="work reveal">
+            <span class="work__no">06</span>
+            <details class="work__d">
+              <summary class="work__sum">
+                <span class="work__title">From AI Tools to AI Systems: How Organizations Redesign Work Around Generative AI</span>
+                <span class="work__meta">with Calista Cooper, Kim Coutts</span>
+                <span class="work__marks"><span class="badge">Work in progress</span></span>
+              </summary>
+              <div class="work__reveal">
+                <p class="work__note">How organizations move from individual AI experimentation to structured, governed workflows.</p>
+              </div>
+            </details>
+          </li>
+        </ol>
+      </section>
+
       <!-- SITAR -->
       <section class="block" id="sitar">
-        <div class="block__head">
-          <span class="label">Sitar</span>
-        </div>
-        <p class="prose__lead reveal">
-          Away from research, I play the sitar. Recordings and performances soon.
-        </p>
+        <div class="block__head"><span class="label">Sitar</span></div>
+        <p class="prose__lead reveal">Away from research, I play the sitar. Recordings and performances soon.</p>
       </section>
 
       <footer class="foot">
