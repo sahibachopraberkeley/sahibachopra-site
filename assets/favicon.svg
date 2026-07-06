@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" fill="#12110f"/>
+  <rect width="64" height="64" fill="#123c2f"/>
   <text x="50%" y="53%" dominant-baseline="central" text-anchor="middle"
-        font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="500" fill="#fbfaf7">S</text>
+        font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="500" fill="#f7f2e8">S</text>
 </svg>
