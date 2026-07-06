@@ -1,3 +1,12 @@
+// Assemble email addresses at runtime so the raw HTML holds no scrapeable address.
+document.querySelectorAll(".email-link").forEach((el) => {
+  try {
+    const addr = atob(el.dataset.e);
+    el.href = "mailto:" + addr;
+    if (el.classList.contains("email-show")) el.textContent = addr;
+  } catch (e) {}
+});
+
 // Scroll-reveal
 const io = new IntersectionObserver(
   (entries) => {
