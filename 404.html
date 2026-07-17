@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sahiba Chopra</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Spectral:wght@400;500&display=swap" rel="stylesheet" />
+  <script>
+    // The site moved off WordPress onto a single page; send old permalinks
+    // (still in search results and bookmarks) to the matching section.
+    (function () {
+      var p = window.location.pathname.toLowerCase();
+      var dest = "/";
+      if (p.indexOf("/papers") === 0 || p.indexOf("/research") === 0) dest = "/#research";
+      else if (p.indexOf("/sitar") === 0) dest = "/#sitar";
+      else if (p.indexOf("/contact") === 0) dest = "/#contact";
+      else if (p.indexOf("/blog") === 0 || /^\/20\d\d\//.test(p) ||
+               p.indexOf("/category") === 0 || p.indexOf("/tag") === 0 ||
+               p.indexOf("/author") === 0) dest = "/#blogging";
+      window.location.replace(dest);
+    })();
+  </script>
+  <style>
+    body {
+      margin: 0; background: #f7f2e8; color: #252525;
+      font-family: 'Spectral', Georgia, serif; font-size: 17px; line-height: 1.55;
+      display: grid; place-items: center; min-height: 100vh;
+    }
+    .card { text-align: center; padding: 24px; }
+    h1 {
+      font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600;
+      font-size: clamp(2rem, 5vw, 3rem); color: #123c2f; margin: 0 0 .4em;
+    }
+    a { color: #123c2f; text-decoration: underline; text-underline-offset: 3px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>This page has moved</h1>
+    <p>Taking you to the right place… If nothing happens, <a href="/">go to the homepage</a>.</p>
+  </div>
+</body>
+</html>
