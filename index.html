@@ -8,194 +8,195 @@
   <meta property="og:title" content="Sahiba Chopra" />
   <meta property="og:description" content="Research on how AI and new technologies change work and organizations." />
   <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#ffffff" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    // Set the theme before first paint so there is no flash.
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        var dark = saved ? saved === "dark"
+                         : window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (dark) document.documentElement.setAttribute("data-theme", "dark");
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
-  <div class="layout">
+
+  <button class="theme" id="theme-toggle" type="button" aria-label="Toggle dark mode">
+    <span class="theme__off">Dark</span><span class="theme__on">Light</span>
+  </button>
+
+  <div class="page">
 
     <!-- MASTHEAD -->
-    <header class="masthead">
-      <div class="masthead__id">
-        <a href="#top" class="name" id="top">Sahiba<br>Chopra</a>
+    <div class="rule" id="top"></div>
+
+    <header class="mast">
+      <div class="mast__id">
+        <h1 class="name"><a href="#top">Sahiba<br>Chopra</a></h1>
         <p class="role">
-          PhD Candidate, Management of&nbsp;Organizations&nbsp;(Macro)<br>
-          UC Berkeley · Haas School of&nbsp;Business
+          PhD Candidate<span class="sl">/</span>Management of Organizations (Macro)<span class="sl">/</span>UC Berkeley<span class="sl">/</span>Haas School of Business
         </p>
-        <p class="market"><span class="market__mark">→</span> I'm on the 2026–27 Academic Job Market</p>
+        <p class="market">On the 2026&ndash;27 academic job market</p>
       </div>
 
-      <figure class="masthead__portrait">
+      <figure class="mast__portrait">
         <img src="assets/portrait.jpg" alt="Sahiba Chopra" width="333" height="500" />
       </figure>
-
-      <nav class="masthead__nav" aria-label="Sections">
-        <a href="#about"><span class="num">01</span> About</a>
-        <a href="#research"><span class="num">02</span> Research</a>
-        <a href="#sitar"><span class="num">03</span> Sitar</a>
-        <a href="#blogging"><span class="num">04</span> Blogging</a>
-        <a href="#contact"><span class="num">05</span> Contact</a>
-      </nav>
-
-      <div class="masthead__links">
-        <a class="email-link" data-e="c2FoaWJhLmNob3ByYUBiZXJrZWxleS5lZHU=" href="#">Email</a>
-        <a href="https://scholar.google.com/citations?user=FWtW78kAAAAJ" target="_blank" rel="noopener">Scholar</a>
-        <a href="https://www.linkedin.com/in/sahiba-chopra-3762124a/" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
     </header>
 
-    <!-- CONTENT -->
-    <main class="content">
+    <div class="rule"></div>
+
+    <nav class="nav" aria-label="Sections">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#sitar">Sitar</a>
+      <a href="#blogging">Writing</a>
+      <a href="#contact">Contact</a>
+      <a class="nav__ext email-link" data-e="c2FoaWJhLmNob3ByYUBiZXJrZWxleS5lZHU=" href="#">Email</a>
+      <a class="nav__ext" href="https://scholar.google.com/citations?user=FWtW78kAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+      <a class="nav__ext" href="https://www.linkedin.com/in/sahiba-chopra-3762124a/" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+
+    <main>
 
       <!-- ABOUT -->
-      <section class="block" id="about">
-        <div class="block__head"><span class="label">About</span></div>
-        <div class="prose reveal">
-          <p>I'm a PhD candidate in the Management of Organizations (Macro) group at UC Berkeley Haas School of Business.</p>
-          <p>I study how new technologies change work and organizations, especially when they move from being exciting tools to becoming part of how work actually gets done.</p>
-          <p>Right now, I am focused on generative AI. I am interested in how AI changes productivity, workflows, evaluation, expertise, and organizational design. I care about the practical questions organizations are facing: when AI helps people do better work, when it creates new kinds of work, how firms should structure knowledge so AI systems can use it, and how managers should govern AI-assisted or AI-executed work.</p>
-          <p>At the same time, I do not think technology adoption is ever just a technical problem. The same tool can have very different effects depending on how it is introduced, who uses it, what work it is applied to, and how organizations evaluate its outputs. That is what makes this moment so interesting: generative AI is not just changing individual productivity; it is pushing organizations to rethink roles, workflows, accountability, and the infrastructure of knowledge work.</p>
-          <p>Before starting the PhD, I spent six years working as a data scientist.</p>
-          <p>Some of the questions that motivate my research are:</p>
-        </div>
-        <ol class="qs reveal">
-          <li>How is AI changing collaboration and coordination at work?</li>
-          <li>How do organizations build the infrastructure needed to use AI at scale?</li>
-          <li>What should be transparent when AI is involved in work?</li>
-          <li>Who benefits from new technologies, and who gets left out?</li>
-        </ol>
-        <div class="prose reveal">
-          <p>Across these questions, my research examines how organizations adopt, adapt to, and are changed by new technologies.</p>
+      <section class="sec" id="about">
+        <h2 class="bar"><span class="bar__no">01</span><span class="bar__t">About</span></h2>
+        <div class="sec__body">
+          <p class="lead">I study how new technologies change work and organizations, especially when they move from being exciting tools to becoming part of how work actually gets done.</p>
+          <div class="prose">
+            <p>I'm a PhD candidate in the Management of Organizations (Macro) group at UC Berkeley Haas School of Business.</p>
+            <p>Right now, I am focused on generative AI. I am interested in how AI changes productivity, workflows, evaluation, expertise, and organizational design. I care about the practical questions organizations are facing: when AI helps people do better work, when it creates new kinds of work, how firms should structure knowledge so AI systems can use it, and how managers should govern AI-assisted or AI-executed work.</p>
+            <p>At the same time, I do not think technology adoption is ever just a technical problem. The same tool can have very different effects depending on how it is introduced, who uses it, what work it is applied to, and how organizations evaluate its outputs. That is what makes this moment so interesting: generative AI is not just changing individual productivity; it is pushing organizations to rethink roles, workflows, accountability, and the infrastructure of knowledge work.</p>
+            <p>Before starting the PhD, I spent six years working as a data scientist.</p>
+            <p>Some of the questions that motivate my research are:</p>
+          </div>
+          <ol class="qs">
+            <li>How is AI changing collaboration and coordination at work?</li>
+            <li>How do organizations build the infrastructure needed to use AI at scale?</li>
+            <li>What should be transparent when AI is involved in work?</li>
+            <li>Who benefits from new technologies, and who gets left out?</li>
+          </ol>
+          <div class="prose">
+            <p>Across these questions, my research examines how organizations adopt, adapt to, and are changed by new technologies.</p>
+          </div>
         </div>
       </section>
 
       <!-- RESEARCH -->
-      <section class="block" id="research">
-        <div class="block__head"><span class="label">Research</span> <span class="label label--hint">Click to expand</span></div>
+      <section class="sec" id="research">
+        <h2 class="bar"><span class="bar__no">02</span><span class="bar__t">Research</span></h2>
 
-        <ol class="index">
-          <li class="work work--lead reveal">
-            <span class="work__no">01</span>
-            <details class="work__d">
-              <summary class="work__sum">
-                <span class="work__flag">Job Market Paper</span>
-                <span class="work__title">Not Worth the Effort: Generative AI and Friction in Collaborative Work</span>
-              </summary>
-              <div class="work__reveal">
-                <p class="work__note">Can the productivity gains from generative AI translate into collective value when work is collaboratively produced? I argue that AI creates <em>effort opacity</em>: difficulty inferring the human effort underlying AI-assisted work. When reviewers perceive little human effort, they become less willing to invest effort in review, limiting the translation of individual productivity gains into collective value. Drawing on more than 320,000 contributions from 27,000 developers across prominent open-source Python projects, I analyze 13,614 human-reviewed contributions submitted since AI coding assistants launched in 2022. Using a fine-tuned AI code detector, I find that AI-predicted contributions are 30 percentage points more likely to be rejected, controlling for quality, project, and collaborator characteristics. They also receive 25% fewer code-specific comments and 22% more general comments. A preregistered within-subjects experiment with software developers tests this mechanism by varying AI disclosure and visible-effort cues. I operationalize reciprocal effort as review prioritization. High-effort cues raise AI-disclosed contributions' average priority from third to second in a four-item queue&mdash;an effect mediated by perceived contributor effort, not code quality or competence. Together, the findings reveal a paradox: AI can make work easier to produce while making others less willing to supply the reciprocal effort required to realize its collective value.</p>
-              </div>
-            </details>
+        <ol class="works">
+          <li class="work work--lead">
+            <div class="work__no"></div>
+            <div class="work__main">
+              <details>
+                <summary class="work__sum">
+                  <h3 class="work__title">Not Worth the Effort: Technology and Effort Opacity in Collaborative Work</h3>
+                  <p class="work__status"><span class="work__status--chip">Job market paper</span></p>
+                </summary>
+                <div class="work__body">
+                  <p class="work__note">Generative AI (AI) makes individuals more productive, but work is often collaborative: one person creates work, and another reviews it. Collaboration therefore relies on a mutual exchange of effort. Before AI, effort was often inferred from the work itself. I argue that by making work cheaper to produce, AI creates <em>effort opacity</em>&mdash;it makes it harder to infer the human effort behind the work. This change in the informational property of work can reduce how much review AI-assisted work receives. I document this change in collaboration using observational data from top projects on GitHub that have over 1 million stars and 20 million dependencies. I find that even after controlling for quality, AI code receives 25% less detailed but 22% more general feedback, is more likely to be rejected and therefore not integrated into the project. I then test whether perceived effort drives this reduction in review in a preregistered experiment with software developers. I find that when effort cues are weak, AI-disclosed work receives less review effort compared to human work. However, when effort cues are strong, AI-disclosed and human work receive similar review effort. These findings show that AI can make work easier to produce while making it harder to attract the feedback needed to improve and integrate it. As AI adoption increases, organizations may need new ways to make human effort legible in work.</p>
+                </div>
+              </details>
+            </div>
           </li>
 
-          <li class="work reveal">
-            <span class="work__no">02</span>
-            <details class="work__d">
-              <summary class="work__sum">
-                <span class="work__marks work__marks--top"><span class="badge badge--rr">Revise &amp; Resubmit · Management Science</span></span>
-                <span class="work__title">Which Ideas Attract Workers? Gender and Labor Supply in Startups</span>
-                <span class="work__meta">with Solène Delecourt (UC Berkeley Haas), Katelyn Cranney (Stanford), Rembrand Koning (Harvard Business School)</span>
-              </summary>
-              <div class="work__reveal">
-                <p class="work__note">Which startups can attract the talent they need to grow? We argue that worker preferences over which problems to solve shape labor supply to early-stage firms. In male-dominated labor markets, startups focused on women may struggle to recruit, especially for critical, male-dominated roles like engineering and senior leadership. We combine observational data on over 52,000 U.S. high-potential startups with a pre-registered field experiment. Linking startups to over 2.5 million worker histories, we find that female-focused startups employ fewer workers: a one standard deviation increase in a startup's female-focus predicts 11% fewer male employees. To isolate worker preferences, we run a field experiment where we randomize the startup idea itself, thereby developing a new experimental paradigm to causally identify how the nature of an idea matters. We built a job-search platform recruiting real tech job seekers in a within-subject design, where each participant evaluates 15 startup ideas, each randomized to be more or less female-focused. Crucially, our experiment is incentive-compatible, because participants' evaluations affect which real job postings our platform subsequently recommends to them. Male job seekers are 6.8 percentage points less likely to apply to female-focused startups than other startups, a 10% decrease from baseline. Offsetting the male penalty would require approximately $47,000 in additional yearly compensation. Our findings demonstrate that who benefits from an idea is an important nonpecuniary job attribute shaping talent acquisition, potentially helping explain why ventures serving women grow more slowly.</p>
-                <p class="work__awards">Nominated for the Best Conference Paper Award and the Research Methods Paper Prize, Strategic Management Society Annual Conference 2023.</p>
-                <p class="work__links"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6336581" target="_blank" rel="noopener">Working paper →</a></p>
-              </div>
-            </details>
+          <li class="work">
+            <div class="work__no"></div>
+            <div class="work__main">
+              <details>
+                <summary class="work__sum">
+                  <h3 class="work__title">Which Ideas Attract Workers? Gender and Labor Supply in Startups</h3>
+                  <p class="work__meta">with Solène Delecourt (UC Berkeley Haas), Katelyn Cranney (Stanford), Rembrand Koning (Harvard Business School)</p>
+                  <p class="work__status work__status--hot">Revise &amp; resubmit <span class="vn">Management Science</span></p>
+                </summary>
+                <div class="work__body">
+                  <p class="work__note">Which startups can attract the talent they need to grow? We argue that worker preferences over which problems to solve shape labor supply to early-stage firms. In male-dominated labor markets, startups focused on women may struggle to recruit, especially for critical, male-dominated roles like engineering and senior leadership. We combine observational data on over 52,000 U.S. high-potential startups with a pre-registered field experiment. Linking startups to over 2.5 million worker histories, we find that female-focused startups employ fewer workers: a one standard deviation increase in a startup's female-focus predicts 11% fewer male employees. To isolate worker preferences, we run a field experiment where we randomize the startup idea itself, thereby developing a new experimental paradigm to causally identify how the nature of an idea matters. We built a job-search platform recruiting real tech job seekers in a within-subject design, where each participant evaluates 15 startup ideas, each randomized to be more or less female-focused. Crucially, our experiment is incentive-compatible, because participants' evaluations affect which real job postings our platform subsequently recommends to them. Male job seekers are 6.8 percentage points less likely to apply to female-focused startups than other startups, a 10% decrease from baseline. Offsetting the male penalty would require approximately $47,000 in additional yearly compensation. Our findings demonstrate that who benefits from an idea is an important nonpecuniary job attribute shaping talent acquisition, potentially helping explain why ventures serving women grow more slowly.</p>
+                  <p class="work__awards">Nominated for the Best Conference Paper Award and the Research Methods Paper Prize, Strategic Management Society Annual Conference 2023.</p>
+                  <p class="work__links"><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6336581" target="_blank" rel="noopener">Working paper &rarr;</a></p>
+                </div>
+              </details>
+            </div>
           </li>
 
-          <li class="work reveal">
-            <span class="work__no">03</span>
-            <details class="work__d">
-              <summary class="work__sum">
-                <span class="work__title">The Fabricated Front: Generative AI and the Opacity of Workplace Performance</span>
-                <span class="work__meta">with Tom Van Nuenen (D-Lab, UC Berkeley), Pratik Sachdeva (D-Lab, UC Berkeley)</span>
-                <span class="work__marks"><span class="badge">Under review</span> <span class="work__venue">The Paris Journal on AI &amp; Digital Ethics</span></span>
-              </summary>
-              <div class="work__reveal">
-                <p class="work__note">Generative AI (GenAI) has become a fixture of workplace life. Current research asks chiefly what this implies for jobs and outputs, measured in productivity, displacement, or bias. What remains underexamined are the interactional reconfigurations that GenAI produces at work. Chopra's (2026) theory of effort opacity has begun to fill this gap by noting the systematic decoupling of observable output from human engagement. When GenAI makes interactional cues less diagnostic, it weakens the reciprocal exchange that sustains collaborative trust. Extending this account of effort opacity, we examine the interactional mechanics that produce opacity in everyday workplace encounters. Drawing on Erving Goffman's dramaturgical framework and 1,250 interview transcripts from Anthropic's AI Interviewer dataset, we identify five opacity mechanisms through which workplace fronts are reorganized: voice (whose stance the words index), provenance (who can stand behind the artifact), vulnerability (whether the worker is uncertain), attention (whether the worker is engaged), and investment (how much labor the output reflects). We show that professionals defend the identity mechanisms while freely producing opacity around the labor mechanisms, and trace this asymmetry to the output-centered organization of contemporary work, where deliverables already stand in for the labor process that produced them. The governance task, accordingly, is one of involvement management: specifying which forms of human involvement (attention, effort, judgment) must remain inspectable, and to whom. Workplace AI policies built on universal disclosure will systematically misrecognize a social field in which inspectability is already audience-relative.</p>
-              </div>
-            </details>
+          <li class="work">
+            <div class="work__no"></div>
+            <div class="work__main">
+              <details>
+                <summary class="work__sum">
+                  <h3 class="work__title">Whose Transparency Is It Anyway?</h3>
+                  <p class="work__meta">with Genevieve Smith (BAIR, UC Berkeley), Natalia Luka (BAIR, UC Berkeley), Min Kyung Lee (UT Austin)</p>
+                  <p class="work__status">Working paper</p>
+                </summary>
+                <div class="work__body">
+                  <p class="work__note">Transparency has become a central principle in generative AI governance, yet there is little agreement about what transparency should actually mean, for whom, and in what contexts. Drawing on the Social Construction of Technology and Value Sensitive Design, this paper examines how different stakeholders understand and experience transparency in generative AI. We use a two-phase mixed-methods study: a survey of 400 end users, AI builders, and policymakers, followed by participatory design sessions with end users. We find that stakeholders broadly agree that transparency matters, but differ in what kinds of transparency they need and whether those needs are currently being met. In particular, existing transparency tools appear to serve builders more effectively than end users, revealing how power shapes which interpretations of transparency become embedded in practice. We argue that meaningful AI transparency requires moving beyond one-size-fits-all disclosures toward participatory, pluralistic transparency infrastructures that reflect the needs of diverse stakeholders.</p>
+                </div>
+              </details>
+            </div>
           </li>
 
-          <li class="work reveal">
-            <span class="work__no">04</span>
-            <details class="work__d">
-              <summary class="work__sum">
-                <span class="work__title">Whose Transparency Is It Anyway?</span>
-                <span class="work__meta">with Genevieve Smith (BAIR, UC Berkeley), Natalia Luka (BAIR, UC Berkeley), Min Kyung Lee (UT Austin)</span>
-                <span class="work__marks"><span class="badge">Working paper</span></span>
-              </summary>
-              <div class="work__reveal">
-                <p class="work__note">Transparency has become a central principle in generative AI governance, yet there is little agreement about what transparency should actually mean, for whom, and in what contexts. Drawing on the Social Construction of Technology and Value Sensitive Design, this paper examines how different stakeholders understand and experience transparency in generative AI. We use a two-phase mixed-methods study: a survey of 400 end users, AI builders, and policymakers, followed by participatory design sessions with end users. We find that stakeholders broadly agree that transparency matters, but differ in what kinds of transparency they need and whether those needs are currently being met. In particular, existing transparency tools appear to serve builders more effectively than end users, revealing how power shapes which interpretations of transparency become embedded in practice. We argue that meaningful AI transparency requires moving beyond one-size-fits-all disclosures toward participatory, pluralistic transparency infrastructures that reflect the needs of diverse stakeholders.</p>
-              </div>
-            </details>
-          </li>
-
-          <li class="work reveal">
-            <span class="work__no">05</span>
-            <details class="work__d">
-              <summary class="work__sum">
-                <span class="work__title">The Technical Debt Tradeoff: Generative AI, Shipping Speed, and the Future Cost of Work</span>
-                <span class="work__meta">with Dhruv Agarwal (Middleware HQ)</span>
-                <span class="work__marks"><span class="badge">Work in progress</span></span>
-              </summary>
-              <div class="work__reveal">
-                <p class="work__note">Generative AI promises to help organizations build and ship products faster, but it may also change the amount and kind of technical debt they accumulate. Technical debt is often treated as a software problem, but it is also an organizational tradeoff: teams sometimes take shortcuts to move quickly, release products, and respond to market pressure, while creating future costs for maintenance, coordination, and reliability. This project examines whether GAI changes that tradeoff. In collaboration with a B2B SaaS company that works with organizations on software delivery and productivity data, we use de-identified workplace data to study whether GAI use is associated with changes in technical debt and whether those changes help or hinder the shipping of products over time. The project asks whether GAI enables organizations to ship more by reducing development bottlenecks, or whether it accelerates the creation of work that is harder to review, maintain, and build on. By treating technical debt as an organizational outcome rather than only a code-quality issue, this study examines how GAI may reshape the relationship between speed, productivity, and long-term organizational capacity.</p>
-              </div>
-            </details>
-          </li>
-
-          <li class="work reveal">
-            <span class="work__no">06</span>
-            <details class="work__d">
-              <summary class="work__sum">
-                <span class="work__title">From AI Tools to AI Systems: How Organizations Redesign Work Around Generative AI</span>
-                <span class="work__meta">with Calista Cooper (Vendasta), Kim Coutts (Vendasta)</span>
-                <span class="work__marks"><span class="badge">Work in progress</span></span>
-              </summary>
-              <div class="work__reveal">
-                <p class="work__note">Generative AI is often introduced into organizations as a tool for individual productivity, but its organizational effects depend on whether firms can turn scattered experimentation into reliable systems of work. This project examines how organizations move from employees using AI on their own to building structured, governed, GAI-enabled workflows. In collaboration with a technology company undergoing an AI-first transformation, we study how GAI adoption changes the way organizational knowledge is documented, shared, governed, and used. The project focuses on a shift from individual GAI use toward systems in which humans increasingly design, manage, and oversee GAI agents, workflows, and knowledge infrastructures. We ask how organizations decide what knowledge becomes usable by GAI, how roles change when employees become builders and orchestrators of GAI-enabled work, and what forms of governance are needed when GAI systems begin carrying out organizational tasks. By examining GAI adoption as a process of organizational redesign rather than simple tool use, this study contributes to research on technology and work by showing how firms build the infrastructure needed to use GAI at scale.</p>
-              </div>
-            </details>
+          <li class="work">
+            <div class="work__no"></div>
+            <div class="work__main">
+              <details>
+                <summary class="work__sum">
+                  <h3 class="work__title">Redesigning Organizations Around AI: Roles, Knowledge Infrastructure, and Governance</h3>
+                  <p class="work__meta">with Mathijs de Vaan (UC Berkeley Haas), Calista Cooper (Vendasta), Kim Coutts (Vendasta)</p>
+                  <p class="work__status">Work in progress</p>
+                </summary>
+                <div class="work__body">
+                  <p class="work__note">Generative AI is usually introduced as a tool for individual productivity, but using it at scale is a problem of organizational design. When AI systems begin carrying out tasks that people used to do, firms have to revisit the basic design questions: how work is divided, who does what, where decision rights sit, and what has to be documented for the organization to function. This project examines how a technology company undergoing an AI-first transformation redesigns itself around AI. We focus on three design choices. First, the division of labor: how roles change when employees become the people who build, direct, and supervise AI-enabled work rather than perform it, and what happens to the entry-level tasks through which people used to learn the job. Second, knowledge infrastructure: what an organization must make explicit and legible before AI systems can act on it, and how the work of documenting and curating that knowledge gets allocated. Third, governance: what oversight structures, accountability, and decision rights are needed when AI systems execute organizational tasks. By treating AI adoption as organizational redesign rather than tool use, this study contributes to research on organizational design by showing how firms rebuild roles, knowledge, and authority around a general-purpose technology.</p>
+                </div>
+              </details>
+            </div>
           </li>
         </ol>
       </section>
 
       <!-- SITAR -->
-      <section class="block" id="sitar">
-        <div class="block__head"><span class="label">Sitar</span></div>
-        <div class="prose reveal">
-          <p>I learn the sitar under the guidance of my guruji, Rajib Karmakar. Here's a short clip of one of the events I performed at.</p>
+      <section class="sec" id="sitar">
+        <h2 class="bar"><span class="bar__no">03</span><span class="bar__t">Sitar</span></h2>
+        <div class="sec__body">
+          <div class="prose">
+            <p>I learn the sitar under the guidance of my guruji, Rajib Karmakar. Here's a short clip of one of the events I performed at.</p>
+          </div>
         </div>
-        <div class="video reveal">
+        <div class="video">
           <iframe src="https://www.youtube-nocookie.com/embed/BzuAkpjUOAA" title="Sitar performance" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
       </section>
 
-      <!-- BLOGGING -->
-      <section class="block" id="blogging">
-        <div class="block__head"><span class="label">Blogging</span></div>
-        <div class="prose reveal">
-          <p>An old habit of reading widely and writing to think. For a while I ran a newsletter rounding up recent management research, and wrote data-driven essays on cities, culture, and everyday life. I haven't posted in a while, but I like keeping the archive around.</p>
+      <!-- WRITING -->
+      <section class="sec" id="blogging">
+        <h2 class="bar"><span class="bar__no">04</span><span class="bar__t">Writing</span></h2>
+        <div class="sec__body">
+          <div class="prose">
+            <p>An old habit of reading widely and writing to think. For a while I ran a newsletter rounding up recent management research, and wrote data-driven essays on cities, culture, and everyday life. I haven't posted in a while, but I like keeping the archive around.</p>
+          </div>
+          <p class="work__links"><a href="https://mngmnt.substack.com/" target="_blank" rel="noopener">Read past issues &rarr;</a></p>
         </div>
-        <p class="work__links reveal"><a href="https://mngmnt.substack.com/" target="_blank" rel="noopener">Read past issues →</a></p>
       </section>
 
       <!-- CONTACT -->
-      <section class="block" id="contact">
-        <div class="block__head"><span class="label">Contact</span></div>
-        <div class="prose reveal">
-          <p>I'd love to chat: about AI and work, research, or anything adjacent. The best way to reach me is email.</p>
+      <section class="sec" id="contact">
+        <h2 class="bar"><span class="bar__no">05</span><span class="bar__t">Contact</span></h2>
+        <div class="sec__body">
+          <div class="prose">
+            <p>I'd love to chat: about AI and work, research, or anything adjacent. The best way to reach me is email.</p>
+          </div>
+          <p class="contact__email"><a class="email-link email-show" data-e="c2FoaWJhLmNob3ByYUBiZXJrZWxleS5lZHU=" href="#">email me</a></p>
         </div>
-        <p class="contact__email reveal"><a class="email-link email-show" data-e="c2FoaWJhLmNob3ByYUBiZXJrZWxleS5lZHU=" href="#">email me</a></p>
       </section>
 
       <footer class="foot">
-        <span>© 2026</span>
+        <span>Sahiba Chopra &mdash; 2026</span>
+        <span>Berkeley, California</span>
       </footer>
 
     </main>

@@ -7,16 +7,15 @@ document.querySelectorAll(".email-link").forEach((el) => {
   } catch (e) {}
 });
 
-// Scroll-reveal
-const io = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) { e.target.classList.add("is-visible"); io.unobserve(e.target); }
-    });
-  },
-  { threshold: 0.12 }
-);
-document.querySelectorAll(".reveal").forEach((el, i) => {
-  el.style.transitionDelay = `${Math.min(i % 3, 2) * 70}ms`;
-  io.observe(el);
-});
+// Light/dark toggle. The initial theme is set inline in <head> to avoid a flash.
+const toggle = document.getElementById("theme-toggle");
+if (toggle) {
+  toggle.addEventListener("click", () => {
+    const dark = document.documentElement.getAttribute("data-theme") === "dark";
+    if (dark) document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", "dark");
+    try {
+      localStorage.setItem("theme", dark ? "light" : "dark");
+    } catch (e) {}
+  });
+}
