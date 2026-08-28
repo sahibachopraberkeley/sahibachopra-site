@@ -12,31 +12,23 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
   <script>
-    // Set the theme before first paint so there is no flash.
+    // Light is the default. Only an explicit saved choice turns on dark mode.
     (function () {
       try {
-        var saved = localStorage.getItem("theme");
-        var dark = saved ? saved === "dark"
-                         : window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (dark) document.documentElement.setAttribute("data-theme", "dark");
+        if (localStorage.getItem("theme") === "dark")
+          document.documentElement.setAttribute("data-theme", "dark");
       } catch (e) {}
     })();
   </script>
 </head>
 <body>
 
-  <button class="theme" id="theme-toggle" type="button" aria-label="Toggle dark mode">
-    <span class="theme__off">Dark</span><span class="theme__on">Light</span>
-  </button>
-
   <div class="page">
 
     <!-- MASTHEAD -->
-    <div class="rule" id="top"></div>
-
-    <header class="mast">
+    <header class="mast" id="top">
       <div class="mast__id">
-        <h1 class="name"><a href="#top">Sahiba<br>Chopra</a></h1>
+        <h1 class="name"><a href="#top">Sahiba Chopra</a></h1>
         <p class="role">
           PhD Candidate<span class="sl">/</span>Management of Organizations (Macro)<span class="sl">/</span>UC Berkeley<span class="sl">/</span>Haas School of Business
         </p>
@@ -44,11 +36,9 @@
       </div>
 
       <figure class="mast__portrait">
-        <img src="assets/portrait.jpg" alt="Sahiba Chopra" width="333" height="500" />
+        <img src="assets/portrait.jpg" alt="Sahiba Chopra" width="600" height="600" />
       </figure>
     </header>
-
-    <div class="rule"></div>
 
     <nav class="nav" aria-label="Sections">
       <a href="#about">About</a>
@@ -56,6 +46,7 @@
       <a href="#sitar">Sitar</a>
       <a href="#blogging">Writing</a>
       <a href="#contact">Contact</a>
+      <a class="nav__ext" href="assets/sahiba-chopra-cv.pdf">CV</a>
       <a class="nav__ext email-link" data-e="c2FoaWJhLmNob3ByYUBiZXJrZWxleS5lZHU=" href="#">Email</a>
       <a class="nav__ext" href="https://scholar.google.com/citations?user=FWtW78kAAAAJ" target="_blank" rel="noopener">Google Scholar</a>
       <a class="nav__ext" href="https://www.linkedin.com/in/sahiba-chopra-3762124a/" target="_blank" rel="noopener">LinkedIn</a>
@@ -197,6 +188,8 @@
       <footer class="foot">
         <span>Sahiba Chopra &mdash; 2026</span>
         <span>Berkeley, California</span>
+        <span>Last updated August 2026</span>
+        <button class="theme" id="theme-toggle" type="button" aria-label="Toggle dark mode"><span class="theme__off">[dark mode]</span><span class="theme__on">[light mode]</span></button>
       </footer>
 
     </main>
