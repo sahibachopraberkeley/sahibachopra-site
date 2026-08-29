@@ -247,10 +247,8 @@ details[open] > .work__sum::after { content: "[-]"; }
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: .02em;
-  color: var(--ink-3);
+  color: var(--link);
 }
-.work__status--chip { display: inline-block; border: 1px solid var(--ink); padding: 2px 6px; color: var(--ink); }
-.work__status--hot { color: var(--ink-2); }
 .work__status .vn { font-style: italic; }
 
 .work__body { margin: 12px 0 0; padding: 12px 0 0; border-top: 1px dotted var(--hair); }
@@ -357,8 +355,8 @@ details[open] > .work__sum::after { content: "[-]"; }
   position: fixed;
   top: 0;
   left: 0;
-  width: 160px;
-  height: 160px;
+  width: 100px;
+  height: 100px;
   pointer-events: none;
   z-index: 999;
   will-change: transform;
@@ -393,37 +391,31 @@ details[open] > .work__sum::after { content: "[-]"; }
   to   { opacity: 1; }
 }
 
-/* the light */
-.disco__beams line {
-  stroke: #39ff88;
-  stroke-width: 2.6;
-  stroke-linecap: round;
-  opacity: .9;
-  animation: laser 110ms steps(2, end) infinite alternate;
+/* the sparkles thrown off the ball */
+.disco__sparks path { fill: #fff6c9; }
+.disco__spark {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: disco-sparkle 1.7s ease-in-out infinite;
 }
-.disco__rays line {
-  stroke: #39ff88;
-  stroke-width: 1.6;
-  stroke-linecap: round;
-  opacity: .3;
-  animation: laser 190ms steps(2, end) infinite alternate;
-}
-.disco__spark { fill: #d8ffe9; opacity: .95; animation: laser 110ms steps(2, end) infinite alternate; }
+.disco__spark:nth-child(2) { animation-delay: -.30s; }
+.disco__spark:nth-child(3) { animation-delay: -.85s; }
+.disco__spark:nth-child(4) { animation-delay: -1.20s; }
+.disco__spark:nth-child(5) { animation-delay: -.55s; }
+.disco__spark:nth-child(6) { animation-delay: -1.45s; }
 
-@keyframes laser {
-  from { opacity: .5;  stroke-width: 2.2; }
-  to   { opacity: 1;   stroke-width: 3.4; }
+@keyframes disco-sparkle {
+  0%, 100% { opacity: .15; scale: .3; rotate: -25deg; }
+  50%      { opacity: 1;   scale: 1;  rotate: 15deg; }
 }
 
-/* Firing harder while the mouse is down. */
-.disco.is-firing .disco__beams line { stroke: #d8ffe9; stroke-width: 4.5; }
-.disco.is-firing .disco__spark { r: 8; }
+/* A burst of sparkle while the mouse is down. */
+.disco.is-firing .disco__sparks path { fill: #ffffff; }
+.disco.is-firing .disco__spark { animation-duration: .55s; }
 
 @media (prefers-reduced-motion: reduce) {
   :root[data-party] .party { animation: none; }
   .disco__facets,
   .disco__facets rect,
-  .disco__beams line,
-  .disco__rays line,
   .disco__spark { animation: none; opacity: .92; }
 }

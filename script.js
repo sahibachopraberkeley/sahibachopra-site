@@ -20,9 +20,9 @@ if (toggle) {
   });
 }
 
-// Party mode: the dark palette, plus a spinning disco ball that throws light
-// at whatever you point at. Its beams converge on the real pointer position, so
-// clicks still land where they look like they land.
+// Party mode: the dark palette, plus a spinning disco ball that stands in for
+// the pointer, trailing four-pointed sparkles. The ball is centred on the real
+// pointer position, so clicks still land where they look like they land.
 (function () {
   const root = document.documentElement;
   const btn = document.getElementById("party-toggle");
@@ -38,8 +38,8 @@ if (toggle) {
 
   function place() {
     frame = null;
-    // The SVG aims its beams at (150, 150) in a 160-wide box.
-    ball.style.transform = "translate(" + (x - 150) + "px," + (y - 150) + "px)";
+    // The ball sits at (50, 50) in a 100-wide box.
+    ball.style.transform = "translate(" + (x - 50) + "px," + (y - 50) + "px)";
   }
 
   function onMove(e) {
