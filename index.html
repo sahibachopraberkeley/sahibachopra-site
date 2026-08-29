@@ -15,7 +15,8 @@
     // Light is the default. Only an explicit saved choice turns on dark mode.
     (function () {
       try {
-        if (localStorage.getItem("theme") === "dark")
+        if (localStorage.getItem("theme") === "dark" ||
+            localStorage.getItem("party") === "on")
           document.documentElement.setAttribute("data-theme", "dark");
       } catch (e) {}
     })();
@@ -24,6 +25,10 @@
 <body>
 
   <div class="page">
+
+    <div class="toybar">
+      <button class="party" id="party-toggle" type="button" aria-pressed="false">[ party mode ]</button>
+    </div>
 
     <!-- MASTHEAD -->
     <header class="mast" id="top">
@@ -61,15 +66,6 @@
           <p class="lead">I am a PhD candidate in the Management of Organizations (Macro) group at the Haas School of Business, UC Berkeley.</p>
           <div class="prose">
             <p>My research examines how technologies shape both how work is created and also how work is evaluated in organizations. I focus on a paradox: tools that make work easier to produce, and may improve its quality, can also attract less support from others. My job market paper develops the concept of <em>effort opacity</em> to explain why: technological assistance creates opacity which makes the creator's effort harder to infer from the work, leading reviewers to perceive less effort and therefore reciprocate with less effort in reviewing it. As a result, the work receives less of the review needed for its development and integration. My related projects examine how AI changes the longer-term costs of producing assisted work and how organizations redesign work around AI. More broadly, I study how the social processes around work create or perpetuate inequality by influencing who is supported and who chooses to participate.</p>
-            <p>The questions that animate this work:</p>
-          </div>
-          <ol class="qs">
-            <li>When does work stop carrying the traces of effort that went into it?</li>
-            <li>How do collaborators reciprocate when those traces are missing?</li>
-            <li>What happens to work that never attracts the review it needs to develop?</li>
-            <li>How can organizations make effort legible in work again?</li>
-          </ol>
-          <div class="prose">
             <p>Prior to grad school I was a data scientist. I have a BA in Economics and Chinese from the University of Maryland, College Park, and an MS in Applied Economics from the University of San Francisco. You can find me at the nearest caf&eacute; that has a florist in the back.</p>
           </div>
         </div>
@@ -190,6 +186,37 @@
       </footer>
 
     </main>
+  </div>
+
+  <div class="cat" id="cat" aria-hidden="true">
+    <svg viewBox="0 0 160 160" width="160" height="160">
+      <defs>
+        <filter id="cat-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="2.6" result="b" />
+          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+        </filter>
+      </defs>
+
+      <!-- lasers, fired from each eye toward the pointer -->
+      <g class="cat__beams" filter="url(#cat-glow)">
+        <line x1="33" y1="40" x2="150" y2="150" />
+        <line x1="53" y1="40" x2="150" y2="150" />
+      </g>
+      <circle class="cat__spark" cx="150" cy="150" r="4.5" filter="url(#cat-glow)" />
+
+      <!-- cat -->
+      <g class="cat__body">
+        <path d="M20 30 L24 12 L38 22 Z" />
+        <path d="M66 30 L62 12 L48 22 Z" />
+        <ellipse cx="43" cy="40" rx="26" ry="22" />
+        <path class="cat__whisker" d="M14 42 H2 M14 47 H3 M72 42 H84 M72 47 H83" />
+        <path class="cat__nose" d="M40 46 h6 l-3 4 Z" />
+      </g>
+      <g class="cat__eyes" filter="url(#cat-glow)">
+        <circle cx="33" cy="40" r="4.5" />
+        <circle cx="53" cy="40" r="4.5" />
+      </g>
+    </svg>
   </div>
 
   <script src="script.js"></script>
