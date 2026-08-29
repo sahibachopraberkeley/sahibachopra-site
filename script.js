@@ -62,10 +62,15 @@ if (toggle) {
         window.addEventListener("mousemove", onMove, { passive: true });
         window.addEventListener("mousedown", fireOn);
         window.addEventListener("mouseup", fireOff);
+      } else {
+        // No pointer to follow, so hang the ball from the top of the screen.
+        ball.style.transform = "";
+        ball.classList.add("disco--hanging");
       }
     } else {
       root.removeAttribute("data-party");
       root.classList.remove("has-cursor");
+      ball.classList.remove("disco--hanging");
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mousedown", fireOn);
       window.removeEventListener("mouseup", fireOff);

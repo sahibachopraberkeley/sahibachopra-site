@@ -342,9 +342,10 @@ details[open] > .work__sum::after { content: "[-]"; }
 :root[data-party] .theme { display: none; }
 
 /* The disco ball replaces the pointer, so hide the real one. */
-/* Only shown once a real pointer is being tracked. On touch there is no
-   pointer to follow, so the ball would otherwise sit stranded at 0,0. */
-:root[data-party].has-cursor .disco { display: block; }
+/* With a fine pointer the ball follows the cursor. On touch there is no
+   pointer to follow, so instead it hangs from the top of the screen. */
+:root[data-party].has-cursor .disco,
+:root[data-party] .disco--hanging { display: block; }
 :root[data-party].has-cursor,
 :root[data-party].has-cursor body,
 :root[data-party].has-cursor a,
@@ -364,6 +365,23 @@ details[open] > .work__sum::after { content: "[-]"; }
   will-change: transform;
 }
 .disco svg { display: block; overflow: visible; }
+
+/* Hanging from the top of the screen, for touch devices. */
+.disco--hanging {
+  top: 40px;
+  left: 50%;
+  margin-left: -50px;
+  transform-origin: 50px -40px;
+  animation: disco-sway 3.2s ease-in-out infinite alternate;
+}
+@keyframes disco-sway {
+  from { transform: rotate(-5deg); }
+  to   { transform: rotate(5deg); }
+}
+/* Short cord stub while it follows the cursor; a long one while it hangs. */
+.disco__cord--long { display: none; }
+.disco--hanging .disco__cord:not(.disco__cord--long) { display: none; }
+.disco--hanging .disco__cord--long { display: inline; }
 
 /* the ball */
 .disco__base { fill: #2b2140; }
@@ -417,6 +435,7 @@ details[open] > .work__sum::after { content: "[-]"; }
 
 @media (prefers-reduced-motion: reduce) {
   :root[data-party] .party { animation: none; }
+  .disco--hanging { animation: none; }
   .disco__facets,
   .disco__facets rect,
   .disco__spark { animation: none; opacity: .92; }
