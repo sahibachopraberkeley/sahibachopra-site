@@ -199,22 +199,30 @@
 
       <!-- lasers, fired from each eye toward the pointer -->
       <g class="cat__beams" filter="url(#cat-glow)">
-        <line x1="33" y1="40" x2="150" y2="150" />
-        <line x1="53" y1="40" x2="150" y2="150" />
+        <line x1="33" y1="42" x2="150" y2="150" />
+        <line x1="53" y1="42" x2="150" y2="150" />
       </g>
       <circle class="cat__spark" cx="150" cy="150" r="4.5" filter="url(#cat-glow)" />
 
       <!-- cat -->
       <g class="cat__body">
-        <path d="M20 30 L24 12 L38 22 Z" />
-        <path d="M66 30 L62 12 L48 22 Z" />
-        <ellipse cx="43" cy="40" rx="26" ry="22" />
-        <path class="cat__whisker" d="M14 42 H2 M14 47 H3 M72 42 H84 M72 47 H83" />
-        <path class="cat__nose" d="M40 46 h6 l-3 4 Z" />
+        <path class="cat__ear" d="M20 33 L21 9 L41 23 Z" />
+        <path class="cat__ear" d="M68 33 L67 9 L47 23 Z" />
+        <path class="cat__ear-in" d="M26 29 L27 16 L37 24 Z" />
+        <path class="cat__ear-in" d="M62 29 L61 16 L51 24 Z" />
+        <ellipse class="cat__head" cx="44" cy="44" rx="28" ry="24" />
+        <path class="cat__whisker" d="M14 46 H2 M14 52 H1 M15 58 H3 M74 46 H86 M74 52 H87 M73 58 H85" />
+        <ellipse class="cat__blush" cx="23" cy="53" rx="6.5" ry="4.2" />
+        <ellipse class="cat__blush" cx="65" cy="53" rx="6.5" ry="4.2" />
+        <ellipse class="cat__muzzle" cx="44" cy="55" rx="15" ry="9.5" />
+        <path class="cat__nose" d="M40 50 h8 l-4 5 z" />
+        <path class="cat__mouth" d="M44 55.5 q-3.5 4.5 -7 1 M44 55.5 q3.5 4.5 7 1" />
       </g>
       <g class="cat__eyes" filter="url(#cat-glow)">
-        <circle cx="33" cy="40" r="4.5" />
-        <circle cx="53" cy="40" r="4.5" />
+        <circle class="cat__eye" cx="33" cy="42" r="6.5" />
+        <circle class="cat__eye" cx="53" cy="42" r="6.5" />
+        <circle class="cat__pupil" cx="33" cy="42" r="2.6" />
+        <circle class="cat__pupil" cx="53" cy="42" r="2.6" />
       </g>
     </svg>
   </div>

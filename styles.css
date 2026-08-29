@@ -368,12 +368,18 @@ details[open] > .work__sum::after { content: "[-]"; }
 }
 .cat svg { display: block; overflow: visible; }
 
-.cat__body ellipse,
-.cat__body path { fill: #f6f4ef; stroke: #111; stroke-width: 2.5; stroke-linejoin: round; }
-.cat__whisker { fill: none; stroke: #f6f4ef; stroke-width: 2; stroke-linecap: round; }
-.cat__nose { fill: #ff9db3; stroke: #111; stroke-width: 1.6; }
+/* A brown emoji-ish cat, sitting up and to the left of the pointer. */
+.cat__head,
+.cat__ear { fill: #a9743f; stroke: #5a3618; stroke-width: 2.5; stroke-linejoin: round; }
+.cat__ear-in { fill: #f0aab8; }
+.cat__muzzle { fill: #e2bb8d; }
+.cat__blush { fill: #ef8ba0; opacity: .5; }
+.cat__nose { fill: #ef8ba0; stroke: #5a3618; stroke-width: 1.4; stroke-linejoin: round; }
+.cat__mouth { fill: none; stroke: #5a3618; stroke-width: 2; stroke-linecap: round; }
+.cat__whisker { fill: none; stroke: #f2e4d2; stroke-width: 1.8; stroke-linecap: round; }
 
-.cat__eyes circle { fill: #fff2a8; stroke: #ff2d55; stroke-width: 2; }
+.cat__eye { fill: #fff2a8; stroke: #ff2d55; stroke-width: 2; }
+.cat__pupil { fill: #5a3618; }
 
 .cat__beams line {
   stroke: #ff2d55;
