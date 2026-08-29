@@ -20,16 +20,16 @@ if (toggle) {
   });
 }
 
-// Party mode: the dark palette, plus a cat that lasers whatever you point at.
-// The cat's beams converge on the real pointer position, so clicks still land
-// where they look like they land.
+// Party mode: the dark palette, plus a spinning disco ball that throws light
+// at whatever you point at. Its beams converge on the real pointer position, so
+// clicks still land where they look like they land.
 (function () {
   const root = document.documentElement;
   const btn = document.getElementById("party-toggle");
-  const cat = document.getElementById("cat");
-  if (!btn || !cat) return;
+  const ball = document.getElementById("disco");
+  if (!btn || !ball) return;
 
-  // A cat cursor only makes sense with a real pointer.
+  // A custom cursor only makes sense with a real pointer.
   const finePointer = window.matchMedia("(pointer: fine)").matches;
 
   let x = window.innerWidth / 2;
@@ -38,8 +38,8 @@ if (toggle) {
 
   function place() {
     frame = null;
-    // The SVG aims its lasers at (150, 150) in a 160-wide box.
-    cat.style.transform = "translate(" + (x - 150) + "px," + (y - 150) + "px)";
+    // The SVG aims its beams at (150, 150) in a 160-wide box.
+    ball.style.transform = "translate(" + (x - 150) + "px," + (y - 150) + "px)";
   }
 
   function onMove(e) {
@@ -49,7 +49,7 @@ if (toggle) {
   }
 
   function fire(on) {
-    cat.classList.toggle("is-firing", on);
+    ball.classList.toggle("is-firing", on);
   }
 
   function setParty(on) {
@@ -57,7 +57,7 @@ if (toggle) {
       root.setAttribute("data-party", "");
       root.setAttribute("data-theme", "dark");
       if (finePointer) {
-        root.classList.add("has-cat");
+        root.classList.add("has-cursor");
         place();
         window.addEventListener("mousemove", onMove, { passive: true });
         window.addEventListener("mousedown", fireOn);
@@ -65,7 +65,7 @@ if (toggle) {
       }
     } else {
       root.removeAttribute("data-party");
-      root.classList.remove("has-cat");
+      root.classList.remove("has-cursor");
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mousedown", fireOn);
       window.removeEventListener("mouseup", fireOff);

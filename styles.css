@@ -343,16 +343,16 @@ details[open] > .work__sum::after { content: "[-]"; }
 /* Party mode owns the palette, so the plain light/dark toggle steps aside. */
 :root[data-party] .theme { display: none; }
 
-/* The cat replaces the pointer, so hide the real one. */
-:root[data-party] .cat { display: block; }
-:root[data-party].has-cat,
-:root[data-party].has-cat body,
-:root[data-party].has-cat a,
-:root[data-party].has-cat button,
-:root[data-party].has-cat summary,
-:root[data-party].has-cat iframe { cursor: none; }
+/* The disco ball replaces the pointer, so hide the real one. */
+:root[data-party] .disco { display: block; }
+:root[data-party].has-cursor,
+:root[data-party].has-cursor body,
+:root[data-party].has-cursor a,
+:root[data-party].has-cursor button,
+:root[data-party].has-cursor summary,
+:root[data-party].has-cursor iframe { cursor: none; }
 
-.cat {
+.disco {
   display: none;
   position: fixed;
   top: 0;
@@ -363,41 +363,67 @@ details[open] > .work__sum::after { content: "[-]"; }
   z-index: 999;
   will-change: transform;
 }
-.cat svg { display: block; overflow: visible; }
+.disco svg { display: block; overflow: visible; }
 
-/* A brown emoji-ish cat, sitting up and to the left of the pointer. */
-.cat__head,
-.cat__ear { fill: #a9743f; stroke: #5a3618; stroke-width: 2.5; stroke-linejoin: round; }
-.cat__ear-in { fill: #f0aab8; }
-.cat__muzzle { fill: #e2bb8d; }
-.cat__blush { fill: #ef8ba0; opacity: .5; }
-.cat__nose { fill: #ef8ba0; stroke: #5a3618; stroke-width: 1.4; stroke-linejoin: round; }
-.cat__mouth { fill: none; stroke: #5a3618; stroke-width: 2; stroke-linecap: round; }
-.cat__whisker { fill: none; stroke: #f2e4d2; stroke-width: 1.8; stroke-linecap: round; }
+/* the ball */
+.disco__base { fill: #2b2140; }
+.disco__edge { fill: none; stroke: #efe6ff; stroke-width: 1.4; opacity: .8; }
+.disco__cord { stroke: #efe6ff; stroke-width: 1.6; opacity: .8; }
+.disco__ring { fill: none; stroke: #efe6ff; stroke-width: 1.6; opacity: .8; }
 
-.cat__eye { fill: #fff2a8; stroke: #ff2d55; stroke-width: 2; }
-.cat__pupil { fill: #5a3618; }
+/* Two tiled copies of the facet grid slide past the clip, so the ball
+   reads as spinning; the hue shift makes the mirrors glitter. */
+.disco__facets {
+  animation: disco-spin 2.6s linear infinite, disco-glitter 3.4s linear infinite;
+}
+@keyframes disco-spin {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-36px); }
+}
+@keyframes disco-glitter {
+  from { filter: hue-rotate(0deg) saturate(1.35) brightness(1.05); }
+  to   { filter: hue-rotate(360deg) saturate(1.35) brightness(1.05); }
+}
+.disco__facets rect { animation: disco-twinkle 1.1s ease-in-out infinite alternate; }
+.disco__facets rect:nth-child(3n)   { animation-delay: -.35s; }
+.disco__facets rect:nth-child(3n+1) { animation-delay: -.75s; }
+.disco__facets rect:nth-child(5n)   { animation-delay: -.15s; }
+@keyframes disco-twinkle {
+  from { opacity: .55; }
+  to   { opacity: 1; }
+}
 
-.cat__beams line {
-  stroke: #ff2d55;
-  stroke-width: 3;
+/* the light */
+.disco__beams line {
+  stroke: #39ff88;
+  stroke-width: 2.6;
   stroke-linecap: round;
-  opacity: .92;
+  opacity: .9;
   animation: laser 110ms steps(2, end) infinite alternate;
 }
-.cat__spark { fill: #fff2a8; opacity: .95; animation: laser 110ms steps(2, end) infinite alternate; }
+.disco__rays line {
+  stroke: #39ff88;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  opacity: .3;
+  animation: laser 190ms steps(2, end) infinite alternate;
+}
+.disco__spark { fill: #d8ffe9; opacity: .95; animation: laser 110ms steps(2, end) infinite alternate; }
 
 @keyframes laser {
-  from { opacity: .55; stroke-width: 2.5; }
-  to   { opacity: 1;   stroke-width: 4;   }
+  from { opacity: .5;  stroke-width: 2.2; }
+  to   { opacity: 1;   stroke-width: 3.4; }
 }
 
 /* Firing harder while the mouse is down. */
-.cat.is-firing .cat__beams line { stroke: #fff2a8; stroke-width: 5.5; }
-.cat.is-firing .cat__spark { r: 8; }
+.disco.is-firing .disco__beams line { stroke: #d8ffe9; stroke-width: 4.5; }
+.disco.is-firing .disco__spark { r: 8; }
 
 @media (prefers-reduced-motion: reduce) {
   :root[data-party] .party { animation: none; }
-  .cat__beams line,
-  .cat__spark { animation: none; opacity: .92; }
+  .disco__facets,
+  .disco__facets rect,
+  .disco__beams line,
+  .disco__rays line,
+  .disco__spark { animation: none; opacity: .92; }
 }

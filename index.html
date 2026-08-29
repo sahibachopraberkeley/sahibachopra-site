@@ -188,41 +188,109 @@
     </main>
   </div>
 
-  <div class="cat" id="cat" aria-hidden="true">
+  <div class="disco" id="disco" aria-hidden="true">
     <svg viewBox="0 0 160 160" width="160" height="160">
       <defs>
-        <filter id="cat-glow" x="-60%" y="-60%" width="220%" height="220%">
-          <feGaussianBlur stdDeviation="2.6" result="b" />
+        <filter id="disco-glow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="2.4" result="b" />
           <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
         </filter>
+        <clipPath id="disco-clip"><circle cx="30" cy="30" r="18" /></clipPath>
+        <radialGradient id="disco-shade" cx="35%" cy="30%" r="75%">
+          <stop offset="0%" stop-color="#fff" stop-opacity=".55" />
+          <stop offset="55%" stop-color="#fff" stop-opacity="0" />
+          <stop offset="100%" stop-color="#000" stop-opacity=".45" />
+        </radialGradient>
       </defs>
 
-      <!-- lasers, fired from each eye toward the pointer -->
-      <g class="cat__beams" filter="url(#cat-glow)">
-        <line x1="33" y1="42" x2="150" y2="150" />
-        <line x1="53" y1="42" x2="150" y2="150" />
+      <!-- beams, thrown from the ball toward the pointer -->
+      <g class="disco__rays" filter="url(#disco-glow)">
+        <line x1="30" y1="30" x2="126" y2="150" />
+        <line x1="30" y1="30" x2="150" y2="126" />
       </g>
-      <circle class="cat__spark" cx="150" cy="150" r="4.5" filter="url(#cat-glow)" />
+      <g class="disco__beams" filter="url(#disco-glow)">
+        <line x1="24" y1="30" x2="150" y2="150" />
+        <line x1="36" y1="30" x2="150" y2="150" />
+      </g>
+      <circle class="disco__spark" cx="150" cy="150" r="4.5" filter="url(#disco-glow)" />
 
-      <!-- cat -->
-      <g class="cat__body">
-        <path class="cat__ear" d="M20 33 L21 9 L41 23 Z" />
-        <path class="cat__ear" d="M68 33 L67 9 L47 23 Z" />
-        <path class="cat__ear-in" d="M26 29 L27 16 L37 24 Z" />
-        <path class="cat__ear-in" d="M62 29 L61 16 L51 24 Z" />
-        <ellipse class="cat__head" cx="44" cy="44" rx="28" ry="24" />
-        <path class="cat__whisker" d="M14 46 H2 M14 52 H1 M15 58 H3 M74 46 H86 M74 52 H87 M73 58 H85" />
-        <ellipse class="cat__blush" cx="23" cy="53" rx="6.5" ry="4.2" />
-        <ellipse class="cat__blush" cx="65" cy="53" rx="6.5" ry="4.2" />
-        <ellipse class="cat__muzzle" cx="44" cy="55" rx="15" ry="9.5" />
-        <path class="cat__nose" d="M40 50 h8 l-4 5 z" />
-        <path class="cat__mouth" d="M44 55.5 q-3.5 4.5 -7 1 M44 55.5 q3.5 4.5 7 1" />
-      </g>
-      <g class="cat__eyes" filter="url(#cat-glow)">
-        <circle class="cat__eye" cx="33" cy="42" r="6.5" />
-        <circle class="cat__eye" cx="53" cy="42" r="6.5" />
-        <circle class="cat__pupil" cx="33" cy="42" r="2.6" />
-        <circle class="cat__pupil" cx="53" cy="42" r="2.6" />
+      <!-- ball -->
+      <g class="disco__ball">
+        <line class="disco__cord" x1="30" y1="0" x2="30" y2="10" />
+        <circle class="disco__ring" cx="30" cy="10" r="2.6" />
+        <circle class="disco__base" cx="30" cy="30" r="18" />
+        <g clip-path="url(#disco-clip)">
+          <g class="disco__facets">
+            <rect x="12" y="18" width="5" height="5" fill="#ffffff" />
+            <rect x="12" y="24" width="5" height="5" fill="#ffffff" />
+            <rect x="12" y="30" width="5" height="5" fill="#ffffff" />
+            <rect x="12" y="36" width="5" height="5" fill="#7ef29d" />
+            <rect x="18" y="12" width="5" height="5" fill="#ffe45e" />
+            <rect x="18" y="18" width="5" height="5" fill="#ffffff" />
+            <rect x="18" y="24" width="5" height="5" fill="#ffe45e" />
+            <rect x="18" y="30" width="5" height="5" fill="#ff9f45" />
+            <rect x="18" y="36" width="5" height="5" fill="#ffffff" />
+            <rect x="18" y="42" width="5" height="5" fill="#4dd4ff" />
+            <rect x="24" y="12" width="5" height="5" fill="#ffe45e" />
+            <rect x="24" y="18" width="5" height="5" fill="#ff9f45" />
+            <rect x="24" y="24" width="5" height="5" fill="#ff4d6d" />
+            <rect x="24" y="30" width="5" height="5" fill="#ff6bd6" />
+            <rect x="24" y="36" width="5" height="5" fill="#ffffff" />
+            <rect x="24" y="42" width="5" height="5" fill="#ffe45e" />
+            <rect x="30" y="12" width="5" height="5" fill="#ff4d6d" />
+            <rect x="30" y="18" width="5" height="5" fill="#ff9f45" />
+            <rect x="30" y="24" width="5" height="5" fill="#ff4d6d" />
+            <rect x="30" y="30" width="5" height="5" fill="#ff4d6d" />
+            <rect x="30" y="36" width="5" height="5" fill="#7ef29d" />
+            <rect x="30" y="42" width="5" height="5" fill="#7ef29d" />
+            <rect x="36" y="12" width="5" height="5" fill="#ff4d6d" />
+            <rect x="36" y="18" width="5" height="5" fill="#ffffff" />
+            <rect x="36" y="24" width="5" height="5" fill="#7c6bff" />
+            <rect x="36" y="30" width="5" height="5" fill="#ffffff" />
+            <rect x="36" y="36" width="5" height="5" fill="#7ef29d" />
+            <rect x="36" y="42" width="5" height="5" fill="#7ef29d" />
+            <rect x="42" y="18" width="5" height="5" fill="#4dd4ff" />
+            <rect x="42" y="24" width="5" height="5" fill="#ffffff" />
+            <rect x="42" y="30" width="5" height="5" fill="#ff4d6d" />
+            <rect x="42" y="36" width="5" height="5" fill="#ff9f45" />
+            <rect x="42" y="42" width="5" height="5" fill="#ffffff" />
+            <rect x="48" y="18" width="5" height="5" fill="#4dd4ff" />
+            <rect x="48" y="24" width="5" height="5" fill="#ff6bd6" />
+            <rect x="48" y="30" width="5" height="5" fill="#ff9f45" />
+            <rect x="48" y="36" width="5" height="5" fill="#4dd4ff" />
+            <rect x="54" y="12" width="5" height="5" fill="#7c6bff" />
+            <rect x="54" y="18" width="5" height="5" fill="#7ef29d" />
+            <rect x="54" y="24" width="5" height="5" fill="#4dd4ff" />
+            <rect x="54" y="30" width="5" height="5" fill="#ff4d6d" />
+            <rect x="54" y="36" width="5" height="5" fill="#ff9f45" />
+            <rect x="54" y="42" width="5" height="5" fill="#ff9f45" />
+            <rect x="60" y="12" width="5" height="5" fill="#ff6bd6" />
+            <rect x="60" y="18" width="5" height="5" fill="#ff9f45" />
+            <rect x="60" y="24" width="5" height="5" fill="#4dd4ff" />
+            <rect x="60" y="30" width="5" height="5" fill="#ff6bd6" />
+            <rect x="60" y="36" width="5" height="5" fill="#ff9f45" />
+            <rect x="60" y="42" width="5" height="5" fill="#ff4d6d" />
+            <rect x="66" y="12" width="5" height="5" fill="#ff4d6d" />
+            <rect x="66" y="18" width="5" height="5" fill="#7ef29d" />
+            <rect x="66" y="24" width="5" height="5" fill="#7ef29d" />
+            <rect x="66" y="30" width="5" height="5" fill="#ff4d6d" />
+            <rect x="66" y="36" width="5" height="5" fill="#ffffff" />
+            <rect x="66" y="42" width="5" height="5" fill="#ff6bd6" />
+            <rect x="72" y="12" width="5" height="5" fill="#ff6bd6" />
+            <rect x="72" y="18" width="5" height="5" fill="#ff6bd6" />
+            <rect x="72" y="24" width="5" height="5" fill="#ff9f45" />
+            <rect x="72" y="30" width="5" height="5" fill="#7ef29d" />
+            <rect x="72" y="36" width="5" height="5" fill="#4dd4ff" />
+            <rect x="72" y="42" width="5" height="5" fill="#7c6bff" />
+            <rect x="78" y="18" width="5" height="5" fill="#ff9f45" />
+            <rect x="78" y="24" width="5" height="5" fill="#4dd4ff" />
+            <rect x="78" y="30" width="5" height="5" fill="#7c6bff" />
+            <rect x="78" y="36" width="5" height="5" fill="#ff4d6d" />
+            <rect x="78" y="42" width="5" height="5" fill="#ff6bd6" />
+          </g>
+          <circle cx="30" cy="30" r="18" fill="url(#disco-shade)" />
+        </g>
+        <circle class="disco__edge" cx="30" cy="30" r="18" />
       </g>
     </svg>
   </div>
