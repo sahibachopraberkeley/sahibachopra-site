@@ -78,7 +78,6 @@ if (toggle) {
     }
     btn.setAttribute("aria-pressed", on ? "true" : "false");
     btn.textContent = on ? "[ party mode: on ]" : "[ party mode ]";
-    try { localStorage.setItem("party", on ? "on" : "off"); } catch (e) {}
   }
 
   function fireOn() { fire(true); }
@@ -88,7 +87,6 @@ if (toggle) {
     setParty(!root.hasAttribute("data-party"));
   });
 
-  let wasParty = null;
-  try { wasParty = localStorage.getItem("party"); } catch (e) {}
-  if (wasParty === "on") setParty(true);
+  // Deliberately not restored from a previous visit: party mode starts off.
+  try { localStorage.removeItem("party"); } catch (e) {}
 })();

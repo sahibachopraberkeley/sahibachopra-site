@@ -15,8 +15,7 @@
     // Light is the default. Only an explicit saved choice turns on dark mode.
     (function () {
       try {
-        if (localStorage.getItem("theme") === "dark" ||
-            localStorage.getItem("party") === "on")
+        if (localStorage.getItem("theme") === "dark")
           document.documentElement.setAttribute("data-theme", "dark");
       } catch (e) {}
     })();
