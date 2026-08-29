@@ -10,13 +10,16 @@
   <meta property="og:type" content="website" />
   <meta name="theme-color" content="#ffffff" />
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=202608282019" />
   <script>
     // Light is the default. Only an explicit saved choice turns on dark mode.
     (function () {
       try {
         if (localStorage.getItem("theme") === "dark")
           document.documentElement.setAttribute("data-theme", "dark");
+        // Party mode never carries over between visits. Cleared here as well as
+        // in script.js, since the two files can be cached independently.
+        localStorage.removeItem("party");
       } catch (e) {}
     })();
   </script>
@@ -293,6 +296,6 @@
     </svg>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=202608282019"></script>
 </body>
 </html>
