@@ -99,14 +99,11 @@ hr, .rule {
 .role .sl { color: var(--ink-3); padding: 0 .3em; }
 
 .market {
-  display: inline-block;
   margin: 14px 0 0;
-  padding: 3px 7px;
-  border: 1px solid var(--ink);
   font-family: var(--mono);
   font-size: 12px;
   letter-spacing: .02em;
-  color: var(--ink);
+  color: var(--link);
 }
 
 .mast__portrait { margin: 0; }
