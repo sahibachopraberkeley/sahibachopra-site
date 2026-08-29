@@ -64,13 +64,26 @@ if (toggle) {
         window.addEventListener("mouseup", fireOff);
       } else {
         // No pointer to follow, so hang the ball from the top of the screen.
+        // The layout is also set inline, so the ball still appears even if a
+        // browser is holding an older cached stylesheet; the class only adds
+        // the sway animation on top.
         ball.style.transform = "";
         ball.classList.add("disco--hanging");
+        ball.style.display = "block";
+        ball.style.top = "40px";
+        ball.style.left = "50%";
+        ball.style.marginLeft = "-50px";
+        ball.style.transformOrigin = "50px -40px";
       }
     } else {
       root.removeAttribute("data-party");
       root.classList.remove("has-cursor");
       ball.classList.remove("disco--hanging");
+      ball.style.display = "";
+      ball.style.top = "";
+      ball.style.left = "";
+      ball.style.marginLeft = "";
+      ball.style.transformOrigin = "";
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mousedown", fireOn);
       window.removeEventListener("mouseup", fireOff);
