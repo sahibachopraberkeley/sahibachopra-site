@@ -342,7 +342,9 @@ details[open] > .work__sum::after { content: "[-]"; }
 :root[data-party] .theme { display: none; }
 
 /* The disco ball replaces the pointer, so hide the real one. */
-:root[data-party] .disco { display: block; }
+/* Only shown once a real pointer is being tracked. On touch there is no
+   pointer to follow, so the ball would otherwise sit stranded at 0,0. */
+:root[data-party].has-cursor .disco { display: block; }
 :root[data-party].has-cursor,
 :root[data-party].has-cursor body,
 :root[data-party].has-cursor a,
