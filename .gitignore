@@ -6,3 +6,5 @@ _*.cjs
 # committed: this repo is served publicly at sahibachopra.com.
 analytics/report.html
 analytics/.aws-sam/
+analytics/daily.log
+analytics/launchd.err

@@ -28,7 +28,13 @@ const flag = (name, fallback) => {
 };
 const has = (name) => argv.includes(`--${name}`);
 
-const DAYS = Number(flag("days", 30));
+/* --summary prints one line for the daily desktop notification. It covers a
+   rolling 24 hours rather than a calendar day: rows are partitioned by UTC
+   date, and 6pm Pacific is already the next day in UTC, so a "today" query
+   would miss most of the afternoon. Two partitions are read and then
+   filtered by timestamp. */
+const SUMMARY = has("summary");
+const DAYS = Number(flag("days", SUMMARY ? 2 : 30));
 const ONE_DAY = flag("day", null);
 
 /* ---- DynamoDB through the CLI ----------------------------------------- */
@@ -141,6 +147,45 @@ for (const day of days) {
   perDay.set(day, { views: v, engs: e });
   views.push(...v);
   engs.push(...e);
+}
+
+/* ---- one-line summary for the daily notification ----------------------- */
+if (SUMMARY) {
+  const cutoff = Date.now() - 24 * 3600 * 1000;
+  const recent = (r) => {
+    const t = Date.parse(r.ts);
+    return Number.isFinite(t) ? t >= cutoff : true;
+  };
+  const v = views.filter(recent);
+  const e = engs.filter(recent);
+
+  if (!v.length) {
+    console.log("No visits in the last 24 hours");
+    process.exit(0);
+  }
+
+  const sess = new Set(v.map((r) => r.sid));
+  const parts = [`${v.length} visit${v.length === 1 ? "" : "s"}`];
+  if (sess.size !== v.length) parts.push(`${sess.size} sessions`);
+
+  const st = new Map();
+  e.forEach((r) => {
+    for (const [name, ms] of Object.entries(r.sections || {})) tally(st, name, ms);
+  });
+  const grand = [...st.values()].reduce((a, b) => a + b, 0);
+  const top = sorted(st)[0];
+  if (top && grand) parts.push(`${top[0]} held ${Math.round((top[1] / grand) * 100)}%`);
+
+  const cityMap = new Map();
+  v.forEach((r) => tally(cityMap, r.city));
+  const cities = sorted(cityMap).slice(0, 3).map(([c]) => c);
+  if (cities.length) parts.push(cities.join(", "));
+
+  const party = e.filter((r) => (r.actions || {})["party mode"]).length;
+  if (party) parts.push(`${party} party mode`);
+
+  console.log(parts.join(" · "));
+  process.exit(0);
 }
 
 if (!views.length && !engs.length) {
@@ -401,5 +446,9 @@ ${papTotal.size ? `<h2>Papers opened</h2><table>${sorted(papTotal).map(([t, ms])
   const out = "/Users/sahibachopra/sahibachopra-site/analytics/report.html";
   writeFileSync(out, html);
   console.log(`Visual report written to ${out}`);
-  try { execFileSync("open", [out]); } catch (e) {}
+  /* The scheduled job passes --no-open so it does not throw a browser window
+     in your face once a day. */
+  if (!has("no-open")) {
+    try { execFileSync("open", [out]); } catch (e) {}
+  }
 }
