@@ -263,6 +263,36 @@ if (papTotal.size) {
   });
 }
 
+/* ---- 6b. what people click ---------------------------------------------- */
+const actTotal = new Map(), actSessions = new Map();
+let partyMsTotal = 0, partySessions = 0;
+engs.forEach((e) => {
+  for (const [name, n] of Object.entries(e.actions || {})) {
+    tally(actTotal, name, n);
+    tally(actSessions, name, 1);
+  }
+  if (e.partyMs) { partyMsTotal += e.partyMs; partySessions++; }
+});
+if (actTotal.size) {
+  head("what people click");
+  const maxA = sorted(actTotal)[0][1];
+  console.log(`  ${pad("Interaction", 30)}${lpad("Visitors", 9)}${lpad("Times", 7)}`);
+  console.log("  " + "─".repeat(66));
+  sorted(actTotal).forEach(([name, n]) => {
+    console.log(`  ${pad(name, 30)}${lpad(actSessions.get(name), 9)}${lpad(n, 7)}   ${bar(n, maxA, 18)}`);
+  });
+  const partyVisitors = actSessions.get("party mode") || 0;
+  if (partyVisitors) {
+    console.log(`\n  Party mode: turned on by ${partyVisitors} of ${engs.length} measured visits ` +
+                `(${pct(partyVisitors, engs.length)}), left running ${dur(partyMsTotal)} in total.`);
+    console.log("  Who they are is not recorded, but the visits that used it were:");
+    engs.filter((e) => (e.actions || {})["party mode"]).slice(0, 12).forEach((e) => {
+      const where = e.city ? `${e.city}${e.region ? ", " + e.region : ""}` : (e.country || "unknown");
+      console.log(`    ${e.ts ? e.ts.slice(0, 16).replace("T", " ") : "?"} UTC  ${pad(where, 28)} ${e.device || ""}  ${dur(e.partyMs || 0)} on`);
+    });
+  }
+}
+
 /* ---- 7. how they got here ----------------------------------------------- */
 head("how they got here");
 const refs = new Map();

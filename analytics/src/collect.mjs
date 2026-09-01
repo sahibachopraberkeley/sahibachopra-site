@@ -165,12 +165,22 @@ export const handler = async (event) => {
         if (ms) papers[clampStr(k, 120)] = ms;
       }
     }
+    /* Named interactions: party mode, the email reveal, outbound links. */
+    const actions = {};
+    if (body.actions && typeof body.actions === "object") {
+      for (const [k, v] of Object.entries(body.actions).slice(0, 30)) {
+        const n = clampNum(v, 10000);
+        if (n) actions[clampStr(k, 60)] = n;
+      }
+    }
     record = {
       ...base,
       sk: `eng#${sid}`,               // one row per session, overwritten
       type: "eng",
       sections,
       papers,
+      actions,
+      partyMs: clampNum(body.partyMs, 6 * 3600 * 1000),
       activeMs: clampNum(body.activeMs, 6 * 3600 * 1000),
       totalMs: clampNum(body.totalMs, 24 * 3600 * 1000),
       scroll: clampNum(body.scroll, 100),

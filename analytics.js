@@ -135,6 +135,8 @@
 
   var sections = {};   // name -> ms
   var papers = {};     // paper title -> ms its abstract sat open
+  var actions = {};    // named interaction -> how many times
+  var partyMs = 0;     // ms spent with party mode running
   var activeMs = 0;
   var scrollMax = 0;
   var clicks = 0;
@@ -176,6 +178,7 @@
     if (!blocks.length) collectBlocks();
 
     activeMs += TICK_MS;
+    if (document.documentElement.hasAttribute("data-party")) partyMs += TICK_MS;
     var b = dominant();
     if (b) sections[b.name] = (sections[b.name] || 0) + TICK_MS;
 
@@ -204,6 +207,41 @@
     }
   }
 
+  /* ---- notable interactions ------------------------------------------- */
+  /* Party mode is watched via the data-party attribute rather than a click
+     handler on the button, so it is counted however it gets switched on and
+     does not care how script.js is wired. */
+  function bump(name) { if (name) actions[name] = (actions[name] || 0) + 1; }
+
+  function wireActions() {
+    var root = document.documentElement;
+    var partyOn = root.hasAttribute("data-party");
+    if (partyOn) bump("party mode");
+    if (window.MutationObserver) {
+      new MutationObserver(function () {
+        var on = root.hasAttribute("data-party");
+        if (on && !partyOn) bump("party mode");
+        partyOn = on;
+      }).observe(root, { attributes: true, attributeFilter: ["data-party"] });
+    }
+
+    document.addEventListener("click", function (e) {
+      var a = e.target && e.target.closest ? e.target.closest("a") : null;
+      if (!a) return;
+      if (a.className && String(a.className).indexOf("email-link") >= 0) {
+        bump("email reveal");
+        return;
+      }
+      var href = a.getAttribute("href") || "";
+      if (/^https?:/i.test(href)) {
+        try {
+          var host = new URL(href).hostname.replace(/^www\./, "");
+          if (host && host.indexOf("sahibachopra.com") < 0) bump("link: " + host);
+        } catch (err) {}
+      }
+    }, true);
+  }
+
   /* ---- reporting back -------------------------------------------------- */
   var sent = false;
   function flush(final) {
@@ -214,6 +252,8 @@
       t: "eng",
       sections: sections,
       papers: papers,
+      actions: actions,
+      partyMs: partyMs,
       activeMs: activeMs,
       totalMs: Date.now() - started,
       scroll: scrollMax,
@@ -232,7 +272,7 @@
     if (document.hidden) flush(false);
   });
 
-  function init() { collectBlocks(); wirePapers(); trackScroll(); }
+  function init() { collectBlocks(); wirePapers(); wireActions(); trackScroll(); }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else {
