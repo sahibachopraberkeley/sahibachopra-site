@@ -1,3 +1,8 @@
 shot-*.png
 _*.cjs
 .DS_Store
+
+# Generated visitor reports contain real visitor data and must never be
+# committed: this repo is served publicly at sahibachopra.com.
+analytics/report.html
+analytics/.aws-sam/

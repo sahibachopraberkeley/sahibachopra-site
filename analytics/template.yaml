@@ -1,0 +1,150 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  sahibachopra.com — private visitor analytics.
+  CloudFront -> Lambda Function URL -> DynamoDB.
+
+  CloudFront sits in front purely to supply the visitor's country/region/city
+  as request headers, so the site never has to look an IP address up anywhere
+  and the raw IP is never written to the table. Reads happen locally via
+  report.mjs using Sahiba's own AWS credentials; nothing reads over the web.
+
+Parameters:
+  AllowOrigins:
+    Type: CommaDelimitedList
+    Description: Origins permitted to post beacons. Anything else is dropped.
+    Default: "https://sahibachopra.com,https://www.sahibachopra.com,http://localhost:8000"
+  RetentionDays:
+    Type: Number
+    Description: Rows self-delete after this many days (DynamoDB TTL).
+    Default: 1095
+
+Globals:
+  Function:
+    Timeout: 10
+    MemorySize: 128
+    Runtime: nodejs22.x
+
+Resources:
+
+  # ---------------------------------------------------------------- storage
+  # PK = day so "what happened on 2026-09-01" is one cheap query and the
+  # report never has to scan the table.
+  #   sk = "view#<timestamp>#<session>"  one row per page load
+  #   sk = "eng#<session>"               one row per session, rewritten on
+  #                                      each flush so it can never double count
+  AnalyticsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: SahibaSiteAnalytics
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: day
+          AttributeType: S
+        - AttributeName: sk
+          AttributeType: S
+      KeySchema:
+        - AttributeName: day
+          KeyType: HASH
+        - AttributeName: sk
+          KeyType: RANGE
+      TimeToLiveSpecification:
+        AttributeName: expiresAt
+        Enabled: true
+
+  # ---------------------------------------------------------------- collector
+  CollectFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: collect.handler
+      CodeUri: src/
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref AnalyticsTable
+          ALLOW_ORIGINS: !Join [",", !Ref AllowOrigins]
+          RETENTION_DAYS: !Ref RetentionDays
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref AnalyticsTable
+      Events:
+        Collect:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref CollectApi
+            Path: /
+            Method: ANY
+
+  # An HTTP API rather than a Lambda function URL: this account blocks
+  # public (AuthType NONE) function URLs, so the URL answered 403 no matter
+  # what its resource policy said. This is the same shape the PDW
+  # registration backend already uses here.
+  #
+  # No CorsConfiguration on purpose. The Lambda writes its own CORS headers
+  # and answers OPTIONS itself; configuring it in both places emits the
+  # header twice, which browsers reject.
+  CollectApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      StageName: $default
+
+  # ---------------------------------------------------------------- edge
+  # The only reason this distribution exists: these headers. CloudFront
+  # resolves the visitor's location at the edge and hands it to the Lambda,
+  # so no IP address ever travels further than AWS's own edge.
+  GeoOriginRequestPolicy:
+    Type: AWS::CloudFront::OriginRequestPolicy
+    Properties:
+      OriginRequestPolicyConfig:
+        Name: !Sub "${AWS::StackName}-viewer-geo"
+        Comment: Forward CloudFront's geolocation headers to the collector.
+        HeadersConfig:
+          HeaderBehavior: whitelist
+          Headers:
+            - CloudFront-Viewer-Country
+            - CloudFront-Viewer-Country-Name
+            - CloudFront-Viewer-Country-Region
+            - CloudFront-Viewer-Country-Region-Name
+            - CloudFront-Viewer-City
+            - CloudFront-Viewer-Time-Zone
+            - Origin
+            - Referer
+            - User-Agent
+            - Content-Type
+        CookiesConfig:
+          CookieBehavior: none
+        QueryStringsConfig:
+          QueryStringBehavior: none
+
+  Distribution:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Enabled: true
+        Comment: sahibachopra.com analytics collector
+        HttpVersion: http2
+        IPV6Enabled: true
+        PriceClass: PriceClass_100
+        Origins:
+          - Id: CollectorOrigin
+            DomainName: !Sub "${CollectApi}.execute-api.${AWS::Region}.amazonaws.com"
+            CustomOriginConfig:
+              OriginProtocolPolicy: https-only
+              OriginSSLProtocols:
+                - TLSv1.2
+        DefaultCacheBehavior:
+          TargetOriginId: CollectorOrigin
+          ViewerProtocolPolicy: https-only
+          Compress: true
+          AllowedMethods: [GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE]
+          CachedMethods: [GET, HEAD]
+          # Nothing here is cacheable: every beacon must reach the Lambda.
+          CachePolicyId: 4135ea2d-6df8-44a3-9df3-4b5a84be39ad          # Managed-CachingDisabled
+          OriginRequestPolicyId: !Ref GeoOriginRequestPolicy
+
+Outputs:
+  CollectEndpoint:
+    Description: Paste this into ENDPOINT at the top of analytics.js
+    Value: !Sub "https://${Distribution.DomainName}/"
+  TableName:
+    Description: DynamoDB table the report reads
+    Value: !Ref AnalyticsTable
