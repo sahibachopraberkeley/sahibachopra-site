@@ -122,12 +122,13 @@
   function collectBlocks() {
     blocks = [];
     var mast = document.getElementById("top");
-    if (mast) blocks.push({ el: mast, name: "Masthead" });
+    if (mast) blocks.push({ el: mast, id: "top", name: "Masthead" });
     var secs = document.querySelectorAll("section.sec");
     for (var i = 0; i < secs.length; i++) {
       var label = secs[i].querySelector(".bar__t");
       blocks.push({
         el: secs[i],
+        id: secs[i].id,
         name: label ? label.textContent.trim() : (secs[i].id || "section " + i),
       });
     }
@@ -184,7 +185,7 @@
 
     /* An abstract only counts while it is both open and actually on screen,
        so leaving one expanded and scrolling away does not inflate it. */
-    if (b && b.name === "Research") {
+    if (b && b.id === "research") {
       for (var key in openPapers) {
         if (openPapers[key]) papers[key] = (papers[key] || 0) + TICK_MS;
       }
