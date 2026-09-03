@@ -159,6 +159,9 @@ hr, .rule {
   color: var(--ink);
 }
 .bar__no { color: var(--ink-3); font-weight: 400; }
+/* Qualifier after a section title, e.g. "(selected)". Set like the number
+   rather than the title so it reads as an aside, not part of the name. */
+.bar__note { color: var(--ink-3); font-weight: 400; }
 
 .sec__body { max-width: 66ch; }
 
