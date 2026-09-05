@@ -234,6 +234,22 @@
         return;
       }
       var href = a.getAttribute("href") || "";
+
+      /* Same-origin files (the CV, any PDF) are relative hrefs, so they never
+         reach the off-site branch below. They are the links most worth
+         counting, so they get named explicitly. */
+      if (/\.(pdf|docx?|pptx?|zip|csv)($|\?)/i.test(href)) {
+        var file = href.split("/").pop().split("?")[0];
+        bump(/cv/i.test(file) ? "CV" : "file: " + file);
+        return;
+      }
+
+      /* In-page navigation: which sections people jump to deliberately. */
+      if (href.charAt(0) === "#" && href.length > 1) {
+        bump("nav: " + href.slice(1));
+        return;
+      }
+
       if (/^https?:/i.test(href)) {
         try {
           var host = new URL(href).hostname.replace(/^www\./, "");
