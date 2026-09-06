@@ -127,6 +127,12 @@ export const handler = async (event) => {
     region: clampStr(h["cloudfront-viewer-country-region-name"], 64),
     city: clampStr(h["cloudfront-viewer-city"], 64),
     edgeTz: clampStr(h["cloudfront-viewer-time-zone"], 64),
+    /* Approximate coordinates for plotting. IP geolocation resolves to a
+       city or ISP hub, so these are neighbourhood-accurate at best and
+       often just a metro centroid. Still no IP address is kept. */
+    lat: clampStr(h["cloudfront-viewer-latitude"], 16),
+    lon: clampStr(h["cloudfront-viewer-longitude"], 16),
+    metro: clampStr(h["cloudfront-viewer-metro-code"], 8),
   };
 
   const base = { day, sid, ts: now.toISOString(), expiresAt, ...geo };

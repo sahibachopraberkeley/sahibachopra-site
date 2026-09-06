@@ -96,6 +96,27 @@ function dayList() {
   return days;
 }
 
+
+/* Approximate city centres, used to place visits recorded before the
+   collector started receiving CloudFront's coordinates. Rows that carry
+   their own lat/lon use those instead. Nothing is geocoded over the
+   network: sending visitor cities to a third-party geocoder would leak
+   exactly the data this whole setup avoids collecting. */
+const CITY_COORDS = {
+  "San Francisco": [37.7749, -122.4194], "Oakland": [37.8044, -122.2712],
+  "Berkeley": [37.8715, -122.2730],      "Richmond": [37.9358, -122.3477],
+  "Santa Clara": [37.3541, -121.9552],   "Mill Valley": [37.9060, -122.5450],
+  "Merced": [37.3022, -120.4830],        "New York": [40.7128, -74.0060],
+  "Miami": [25.7617, -80.1918],          "Ashburn": [39.0438, -77.4874],
+  "Cleveland": [41.4993, -81.6944],      "Smyrna": [33.8840, -84.5144],
+  "Houston": [29.7604, -95.3698],        "Oxford": [51.7520, -1.2577],
+  "Cambridge": [52.2053, 0.1218],        "Enfield": [51.6521, -0.0810],
+  "Canary Wharf": [51.5054, -0.0235],    "Frankfurt am Main": [50.1109, 8.6821],
+  "Bucharest": [44.4268, 26.1025],       "Singapore": [1.3521, 103.8198],
+  "Beijing": [39.9042, 116.4074],        "Changzhou": [31.8107, 119.9740],
+  "Zhenjiang": [32.1880, 119.4250],      "Xalapa": [19.5438, -96.9102],
+};
+
 /* ---- formatting -------------------------------------------------------- */
 const B = "█", L = "░";
 const bar = (n, max, width = 34) =>
@@ -371,6 +392,36 @@ if (has("html")) {
     <tr><th>${esc(label)}</th><td class="n">${esc(shown)}${esc(extra)}</td>
     <td class="b"><i style="width:${max ? Math.max(0, (n / max) * 100) : 0}%"></i></td></tr>`;
 
+  /* Map points: one per city, positioned by the row's own coordinates when
+     present, else by the built-in table. */
+  const engBySid = new Map(engs.map((e) => [e.sid, e]));
+  const spots = new Map();
+  views.forEach((v) => {
+    if (!v.city) return;
+    const key = [v.city, v.region || "", v.country || ""].join("|");
+    let sp = spots.get(key);
+    if (!sp) {
+      const ll = (v.lat && v.lon) ? [Number(v.lat), Number(v.lon)] : CITY_COORDS[v.city];
+      if (!ll || !Number.isFinite(ll[0])) return;
+      sp = { lat: ll[0], lon: ll[1], city: v.city, region: v.region || "",
+             country: v.country || "", n: 0, ms: 0, refs: new Set(), precise: false };
+      spots.set(key, sp);
+    }
+    if (v.lat && v.lon) { sp.precise = true; sp.lat = Number(v.lat); sp.lon = Number(v.lon); }
+    sp.n += 1;
+    const e = engBySid.get(v.sid);
+    if (e) sp.ms = Math.max(sp.ms, e.activeMs || 0);
+    let r = v.ref || "direct";
+    if (/^https?:/.test(r)) { try { r = new URL(r).hostname.replace(/^www\./, ""); } catch (x) {} }
+    if (r.includes("sahibachopra.com")) r = "internal";
+    sp.refs.add(r);
+  });
+  const mapPoints = [...spots.values()].map((s) => ({
+    lat: s.lat, lon: s.lon, n: s.n, best: s.ms, precise: s.precise,
+    label: [s.city, s.region, s.country].filter(Boolean).join(", "),
+    refs: [...s.refs].slice(0, 3).join(", "),
+  }));
+
   const maxCity = sorted(cities)[0] ? sorted(cities)[0][1] : 1;
   const maxCountry = sorted(countries)[0] ? sorted(countries)[0][1] : 1;
   const maxOpens = sorted(papOpens)[0] ? sorted(papOpens)[0][1] : 1;
@@ -378,6 +429,8 @@ if (has("html")) {
   const html = `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>sahibachopra.com — visitors</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <style>
   :root{--ink:#000;--bg:#fff;--accent:#d8202a}
   *{box-sizing:border-box}
@@ -399,6 +452,9 @@ if (has("html")) {
   .kpi{background:#fff;padding:14px}
   .kpi b{display:block;font-size:26px;letter-spacing:-.03em}
   .kpi span{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#555}
+  #map{height:460px;border:1px solid #000;margin-top:6px;background:#f4f4f4}
+  .mapnote{font-size:11px;color:#666;margin:8px 0 0}
+  .leaflet-container{font:12px "Helvetica Neue",Helvetica,Arial,sans-serif}
   footer{margin-top:52px;font-size:11px;color:#666;border-top:1px solid #ccc;padding-top:12px}
 </style></head><body>
 <div class="rule"></div>
@@ -424,6 +480,12 @@ if (has("html")) {
 <h2>Time of day (visitor local)</h2>
 <table>${hours.map((n, h) => barRow(`${String(h).padStart(2, "0")}:00`, n, n, maxHour)).join("")}</table>
 
+<h2>Map</h2>
+<div id="map"></div>
+<p class="mapnote">Positions come from IP geolocation, which resolves to a city or an
+internet provider's hub. Treat each dot as "somewhere around here", not an address.
+Circle size is number of visits.</p>
+
 <h2>Cities</h2>
 <table>${rows(cities, 15).map(([k, n]) => barRow(k, n, n, maxCity)).join("")}</table>
 
@@ -441,6 +503,36 @@ ${papTotal.size ? `<h2>Papers opened</h2><table>${sorted(papTotal).map(([t, ms])
   No IP addresses, no cookies, no third-party trackers. Location is resolved at the CloudFront
   edge and only city/region/country is stored. Rows self-delete after three years.
 </footer>
+
+<script>
+(function () {
+  var pts = ${JSON.stringify(mapPoints)};
+  if (!window.L || !pts.length) {
+    var d = document.getElementById("map");
+    if (d) d.innerHTML = '<p style="padding:16px;font-size:12px">' +
+      (pts.length ? 'Map library did not load (offline?).' : 'No located visits yet.') + '</p>';
+    return;
+  }
+  var map = L.map("map", { scrollWheelZoom: false });
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 12, attribution: "&copy; OpenStreetMap"
+  }).addTo(map);
+  var group = [];
+  pts.forEach(function (p) {
+    var r = 6 + Math.min(16, Math.sqrt(p.n) * 5);
+    var m = L.circleMarker([p.lat, p.lon], {
+      radius: r, color: "#d8202a", weight: 2, fillColor: "#d8202a", fillOpacity: 0.35
+    }).addTo(map);
+    var secs = p.best ? Math.round(p.best / 1000) + "s best visit" : "no engagement recorded";
+    m.bindPopup("<b>" + p.label + "</b><br>" + p.n + " visit" + (p.n === 1 ? "" : "s") +
+                "<br>" + secs + "<br>via " + p.refs +
+                (p.precise ? "" : "<br><i>city centre (approx)</i>"));
+    group.push(m);
+  });
+  map.fitBounds(L.featureGroup(group).getBounds().pad(0.25));
+  if (map.getZoom() > 9) map.setZoom(9);
+})();
+</script>
 </body></html>`;
 
   const out = "/Users/sahibachopra/sahibachopra-site/analytics/report.html";
