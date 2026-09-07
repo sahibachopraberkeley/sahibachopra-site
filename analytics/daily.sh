@@ -34,8 +34,8 @@ export HOME="${HOME:-/Users/sahibachopra}"
   echo "summary: $SUMMARY"
 
   # Refresh the visual report so it is current whenever it gets opened.
-  (cd "$DIR" && node report.mjs --days 30 --html --no-open >/dev/null 2>&1) \
-    && echo "report.html refreshed" || echo "report.html refresh failed"
+  (cd "$DIR" && node report.mjs --days 14 --html --no-open >/dev/null 2>&1) \
+    && echo "report.html refreshed" || echo "WARNING report.html refresh failed"
 
   # Quote-safe: AppleScript strings break on embedded double quotes.
   SAFE="${SUMMARY//\"/\'}"

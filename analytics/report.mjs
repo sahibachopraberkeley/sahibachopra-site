@@ -53,7 +53,11 @@ function unmarshall(v) {
   return v;
 }
 
-function queryDay(day) {
+/* The scheduled job runs unattended, and a single transient AWS hiccup used
+   to fail the whole report: one day produced a "Daily update failed"
+   notification and another silently skipped refreshing report.html. Each
+   query now retries before giving up. */
+function queryDay(day, attempt = 0) {
   let out;
   try {
     out = execFileSync("aws", [
@@ -75,9 +79,23 @@ function queryDay(day) {
       console.error("\nAWS credentials are not configured. Run `aws configure`.\n");
       process.exit(1);
     }
+    if (attempt < 3) {
+      execFileSync("sleep", [String(2 * (attempt + 1))]);
+      return queryDay(day, attempt + 1);
+    }
     throw err;
   }
-  const parsed = JSON.parse(out);
+  let parsed;
+  try {
+    parsed = JSON.parse(out);
+  } catch (e) {
+    /* Truncated output is itself a transient failure worth retrying. */
+    if (attempt < 3) {
+      execFileSync("sleep", [String(2 * (attempt + 1))]);
+      return queryDay(day, attempt + 1);
+    }
+    throw e;
+  }
   return (parsed.Items || []).map((it) => {
     const o = {};
     for (const [k, v] of Object.entries(it)) o[k] = unmarshall(v);
