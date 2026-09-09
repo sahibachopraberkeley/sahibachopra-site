@@ -19,6 +19,13 @@ export PATH="/usr/local/bin:/opt/homebrew/bin:/opt/anaconda3/bin:/usr/bin:/bin:/
 # The AWS CLI needs to find the credentials file when there is no login shell.
 export HOME="${HOME:-/Users/sahibachopra}"
 
+# launchd starts jobs with no locale, so the Python-based AWS CLI falls back to
+# ASCII and dies on any non-ASCII byte in the data. That is what broke the
+# Sep 5 and Sep 8 runs: both were days someone opened the abstract whose stored
+# title contains "Solene" with an accent. Nothing transient about it.
+export LANG="${LANG:-en_US.UTF-8}"
+export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+
 {
   echo "=== $(date '+%Y-%m-%d %H:%M:%S %Z') ==="
 
