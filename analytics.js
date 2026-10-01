@@ -240,7 +240,7 @@
          counting, so they get named explicitly. */
       if (/\.(pdf|docx?|pptx?|zip|csv)($|\?)/i.test(href)) {
         var file = href.split("/").pop().split("?")[0];
-        bump(/cv/i.test(file) ? "CV" : "file: " + file);
+        bump(/cv/i.test(file) ? "CV" : /jmp/i.test(file) ? "JMP" : "file: " + file);
         return;
       }
 
